@@ -1,0 +1,15 @@
+-r backend/requirements.txt
+# Provisional development stack; freeze resolved dependencies after environment selection.
+numpy>=1.26,<3
+PyYAML>=6,<7
+torch>=2.6,<3
+torchvision>=0.21,<1
+optuna>=4,<5
+mlflow>=2.22,<4
+onnx>=1.17,<2
+onnxruntime>=1.20,<2
+torchmetrics>=1.6,<2
+scikit-learn>=1.6,<2
+matplotlib>=3.9,<4
+httpx>=0.28,<1
+pytest>=8,<9

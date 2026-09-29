@@ -1,0 +1,15 @@
+# Requirements are fixed; null values require research and validation.
+task: 3
+seed: 42
+image_size: [128, 128]
+dataset: oxford_iiit_pet
+validation_fraction: 0.2
+model: null
+training: null
+loss: null
+optuna:
+  search_space: null
+  objective: null
+  trials: null
+tracking:
+  provider: null # Choose MLflow or W&B and document why.
