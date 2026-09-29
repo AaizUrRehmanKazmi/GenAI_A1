@@ -102,3 +102,12 @@ python -m training.train_task1 --device cuda --max-hours 4.5 --output-dir artifa
 ```
 
 The CPU environment previously created in work/pets-venv is for local checks. It does not enable GPU training. The baseline settings have not been tuned; Optuna, final testing and ONNX export remain pending. Initial predictions after a one-batch smoke run are expected to look nearly uniform and are not meaningful restoration results.
+
+## Analyze the Task 1 baseline
+
+Use the saved best checkpoint for validation-only comparisons against the corrupted inputs:
+```sh
+python -m evaluation.evaluate_task1 --checkpoint artifacts/task1-baseline/best.pt --device cuda
+```
+
+See [Colab analysis instructions and output definitions](docs/task1_validation_analysis.md). Analysis outputs default to a new validation_analysis directory beside the checkpoint. The official test set remains untouched.
