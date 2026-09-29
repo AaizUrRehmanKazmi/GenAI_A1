@@ -1,3 +1,13 @@
 # AI assistance record
 
 Codex assisted with repository scaffolding, Docker configuration, a placeholder web shell, API transport validation, and infrastructure tests. Model architectures, training procedures, research comparisons and results remain unimplemented. See validation.md for executed checks and limitations. Student verification, corrections and understanding: TODO.
+
+On 2026-09-29, Codex implemented the standard-library Pets split preparation script, generated split lists from the local official annotations, and added six tests for split integrity and failure handling. Dataset filenames were checked; image contents were not decoded or modified. The splitting algorithm and alternatives are recorded in research/pets_split.md for student review.
+
+Codex implemented the clean PetsDataset, a development-only image scanner, five loader tests and a preprocessing decision note. All train/validation images passed decoding/tensor checks, and a 16-image grid was visually inspected. Bilinear resizing and [0,1] scaling are explicit provisional conventions; no comparison of downstream model quality was performed. Student review of the decisions and implementation remains necessary.
+
+Codex implemented pure corruption functions, JSON replay specs, six tests and a training-only severity preview. Tests include target preservation, replay, pixel-noise statistics, Gaussian impulse/constant checks and 300 fixed-severity occlusion cases. Implementation choices about padding and mask geometry are provisional and documented in research/corruptions.md; no research comparison or model-quality claim was completed.
+
+Codex added training/evaluation dataset wrappers, deterministic manifest generation, four integration tests and a real-data batching/replay check. Generated test specifications from filenames only. Validation's ten-case-per-image design and RNG/checkpoint constraints are documented for student review. No training or evaluation of a learned model was performed.
+
+Codex implemented a provisional Task 1 autoencoder, TorchMetrics L1/SSIM loss wrapper, local MLflow logging, batch-resumable trainer and a Colab launcher notebook. Tested tensor/gradient contracts, synthetic learning, real-data smoke training and actual interruption/resume equivalence on CPU. The tiny learning check needed more updates than initially budgeted; both the initial failure and successful longer diagnostic are recorded in validation.md. Architecture and baseline settings are not research-selected; alternatives, limits and required student investigation are documented in research/task1_baseline.md. GPU/Colab execution remains unverified.

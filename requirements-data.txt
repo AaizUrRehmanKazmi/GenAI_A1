@@ -1,0 +1,4 @@
+# Minimal clean-image loading dependencies. Install the appropriate CPU/CUDA
+# PyTorch build separately for your machine, then install this file.
+numpy>=1.26,<3
+Pillow==11.2.1

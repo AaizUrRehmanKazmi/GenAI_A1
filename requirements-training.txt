@@ -1,0 +1,5 @@
+# Install a hardware-appropriate PyTorch build first (CPU or CUDA).
+-r requirements-data.txt
+PyYAML==6.0.2
+torchmetrics==1.7.1
+mlflow-skinny==2.22.0

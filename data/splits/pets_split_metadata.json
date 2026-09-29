@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "dataset": "Oxford-IIIT Pet",
+  "source_url": "https://www.robots.ox.ac.uk/~vgg/data/pets/",
+  "seed": 42,
+  "validation_fraction": 0.2,
+  "algorithm": "Python random.Random(42).shuffle on official trainval order; first 736 IDs are validation",
+  "path_base": "Dataset root containing images/ and annotations/",
+  "counts": {
+    "train": 2944,
+    "val": 736,
+    "test": 3669
+  },
+  "unlisted_jpeg_files_excluded": 41,
+  "annotation_sha256": {
+    "trainval.txt": "408f3f609481b939c94634169e6413414b733a3faeba440cbdcc5c02142eebdc",
+    "test.txt": "a5454003774ffe01f4f322756d3ba5495bae21cb30bb217ab285dbfa2bef245c"
+  },
+  "checks": {
+    "unique_ids": true,
+    "disjoint_splits": true,
+    "all_referenced_files_exist": true,
+    "official_test_order_preserved": true,
+    "image_decoding_checked": false
+  }
+}

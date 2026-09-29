@@ -45,3 +45,60 @@ Vite proxies `/api` to localhost:8000. Install root `requirements.txt` only afte
 Start with [next steps](docs/next_steps.md), [requirement map](docs/requirements.md), and [decision template](docs/research/decision-template.md). Complete original Google Stitch design evidence before implementing the final interface. Suggested plan choices such as PyTorch or MLflow are provisional rather than assignment-mandated conclusions.
 
 Read [validation status](docs/validation.md) before treating infrastructure as verified. No datasets or model downloads are triggered automatically. Large models and raw data are ignored by Git. The repository has no remote until you connect your GitHub repository.
+
+## Clean pet image loading
+
+`src/data/pets_dataset.py` now loads the saved Pets splits into RGB float32 tensors at 128×128, with values in [0,1]. It does not apply corruptions yet. See [preprocessing choices and usage](docs/research/pets_preprocessing.md).
+
+With PyTorch installed in your selected Python environment:
+```sh
+python -m pip install -r requirements-data.txt
+python -m unittest discover -s tests -p test_pets_dataset.py -v
+python -m scripts.check_pets_dataset
+```
+
+The scanner checks all training and validation images and writes a report and grid under `artifacts/data_checks/`. It does not inspect official test images.
+
+## Corruption checks
+
+The corruption module implements the four required conditions and replayable settings. See [corruption conventions and examples](docs/research/corruptions.md).
+
+```sh
+python -m unittest discover -s tests -p test_corruptions.py -v
+python -m scripts.check_corruptions
+```
+
+The preview grid and its settings use training images only. `PetsDataset` still returns clean images: a dynamic training wrapper and fixed evaluation manifests are the next milestone.
+
+## Dynamic restoration data and fixed evaluation
+
+`TrainingPetsDataset` generates fresh corruption on each access. `EvaluationPetsDataset` replays the saved validation/test cases. Both return input, target, label, image ID, relative path and JSON corruption settings.
+
+```sh
+python -m scripts.generate_manifests
+python -m scripts.check_restoration_data
+```
+
+See [data pipeline usage and reproducibility](docs/research/restoration_data.md) and [manifest format](data/manifests/README.md). Test manifest generation reads filenames only. Do not run model selection on the test split.
+
+## Task 1 baseline training
+
+A provisional universal autoencoder, L1+SSIM loss and resumable training loop are implemented. See the [training guide](docs/research/task1_baseline.md) for architecture decisions, time budgets, checkpoint recovery, tracking and limitations. [Colab notebook](notebooks/task1_colab.ipynb) runs these same scripts with persistent output storage.
+
+```sh
+python -m pip install -r requirements-training.txt
+python -m unittest discover -s tests -p test_task1.py -v
+python -m training.train_task1 --device cpu --epochs 1 --train-limit 16 --val-images 1 --output-dir artifacts/task1-smoke
+```
+
+After the smoke check, use a CUDA-enabled environment for the full baseline:
+```sh
+python -m training.train_task1 --device cuda --max-hours 4.5 --output-dir artifacts/task1-baseline
+```
+
+Resume using the same settings and output folder:
+```sh
+python -m training.train_task1 --device cuda --max-hours 4.5 --output-dir artifacts/task1-baseline --resume artifacts/task1-baseline/last.pt
+```
+
+The CPU environment previously created in work/pets-venv is for local checks. It does not enable GPU training. The baseline settings have not been tuned; Optuna, final testing and ONNX export remain pending. Initial predictions after a one-batch smoke run are expected to look nearly uniform and are not meaningful restoration results.
