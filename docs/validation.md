@@ -71,3 +71,8 @@ Added a separate corrupted-input diagnostic while keeping baseline and clean-dia
 - Existing three validation-report tests passed. New notebook code cells parsed successfully; git diff whitespace check passed.
 - Real-data CPU smoke completed one epoch with 16 training images and 10 validation cases, producing last/best checkpoints and MLflow artifacts under artifacts/spatial-agent-smoke. Spatial evaluator completed 40 validation cases and generated reports/grids. These subset results are execution checks, not performance evidence.
 - Default model: 203,107 parameters, latent 32×8×8. Full GPU training and full validation are pending on Colab. Original model/trainer/data/loss sources were not modified.
+
+## 16×16 spatial pilot (2026-09-30)
+- Three CPU unit tests passed: compressed shape/range, forward through latent, finite gradients and tiny-target learning; stochastic checkpoint update equivalence; invalid input/compression rejection.
+- Real-data smoke paused after epoch1 with target2, resumed to epoch2, and spatial16 evaluation completed 40 cases with reports/grids. These are execution checks, not evidence of restoration quality.
+- Notebook code cells parsed and git diff whitespace check passed. GPU pilot remains pending. Earlier model/trainer source files remain unchanged.

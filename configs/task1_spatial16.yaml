@@ -1,0 +1,24 @@
+# Provisional baseline, not an Optuna-selected or final configuration.
+task: 1
+architecture: spatial16_ae_v1
+seed: 42
+image_size: [128, 128]
+dataset: oxford_iiit_pet
+validation_fraction: 0.2
+model:
+  channels: [16, 32, 64, 128]
+  latent_channels: 32
+  dropout: 0.0
+training:
+  epochs: 20
+  batch_size: 16
+  learning_rate: 0.001
+  checkpoint_every_batches: 50
+loss:
+  alpha: 0.8
+optuna:
+  search_space: null
+  objective: null
+  trials: null
+tracking:
+  provider: mlflow

@@ -132,3 +132,6 @@ python -m training.diagnose_task1_corruptions --device cuda --steps 1000 --outpu
 
 ## Spatial bottleneck experiment
 Use `notebooks/task1_spatial_colab.ipynb` and see [experiment notes](docs/task1_spatial_experiment.md). This preserves the vector baseline and uses separate output folders.
+
+## 16×16 spatial pilot
+Use `notebooks/task1_spatial16_colab.ipynb` for the five-epoch pilot; see [comparison protocol](docs/task1_spatial16_experiment.md). The 20-epoch target is retained for compatible continuation after reviewing results.
