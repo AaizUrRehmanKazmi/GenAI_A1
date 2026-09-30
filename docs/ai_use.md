@@ -21,3 +21,5 @@ Codex implemented the controlled tiny-set corruption diagnostic. It retains the 
 - Added an AI-assisted spatial convolutional Task 1 comparison, separate trainer/evaluator and Colab notebook. Architecture remains provisional; user must interpret results and justify methodology.
 
 - Added AI-assisted 16×16 latent comparison with unchanged parameter count, separate checkpoint provenance, five-epoch pause and Colab workflow. Larger latent and changed receptive fields are documented; effectiveness remains to be tested on GPU.
+
+- Added AI-assisted Optuna TPE screening across five hyperparameters with fixed-alpha final-epoch ranking, atomic JSON study persistence, unchanged trainer reuse, and a Colab notebook. Search bounds and final candidate choices require user interpretation; no final performance claim is made.

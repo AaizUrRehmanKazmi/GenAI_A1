@@ -135,3 +135,6 @@ Use `notebooks/task1_spatial_colab.ipynb` and see [experiment notes](docs/task1_
 
 ## 16×16 spatial pilot
 Use `notebooks/task1_spatial16_colab.ipynb` for the five-epoch pilot; see [comparison protocol](docs/task1_spatial16_experiment.md). The 20-epoch target is retained for compatible continuation after reviewing results.
+
+## Task 1 hyperparameter screening
+Use `notebooks/task1_optuna_colab.ipynb` after installing `requirements-optimization.txt`. See [search protocol](docs/task1_optuna.md) for fair alpha-independent ranking, resume behavior and screening limitations.

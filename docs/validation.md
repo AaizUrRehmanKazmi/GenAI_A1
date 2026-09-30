@@ -76,3 +76,9 @@ Added a separate corrupted-input diagnostic while keeping baseline and clean-dia
 - Three CPU unit tests passed: compressed shape/range, forward through latent, finite gradients and tiny-target learning; stochastic checkpoint update equivalence; invalid input/compression rejection.
 - Real-data smoke paused after epoch1 with target2, resumed to epoch2, and spatial16 evaluation completed 40 cases with reports/grids. These are execution checks, not evidence of restoration quality.
 - Notebook code cells parsed and git diff whitespace check passed. GPU pilot remains pending. Earlier model/trainer source files remain unchanged.
+
+## Optuna screening (2026-09-30)
+- Installed Optuna4.5.0 in the workspace CPU test environment.
+- Two unit tests passed: ranking is independent of training-alpha loss, and completed observations reconstruct a usable Optuna study.
+- Real-data debug search completed one trial, then a second invocation with total target2 retained trial0 and completed trial1. Identity baseline, checkpoints, histories, MLflow logs, leaderboard and selected YAML were produced. GPU/full-data search remains pending.
+- Notebook code cells parsed; git diff whitespace checks passed. Existing trainer/model sources were not modified.
