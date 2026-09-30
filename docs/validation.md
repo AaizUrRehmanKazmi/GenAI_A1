@@ -65,3 +65,9 @@ An integration test passed for fixed-image loading, grayscale conversion, forced
 ## Tiny-set corruption diagnostic — 2026-09-30
 
 Added a separate corrupted-input diagnostic while keeping baseline and clean-diagnostic source unchanged. Two tests passed: fixed-case reproducibility without advancing the training RNG, fresh training inputs with preserved targets, and end-to-end resumed/uninterrupted equivalence, dropout configuration and overwrite protection. A two-update CPU smoke run on two real training images produced fixed-case metrics, grids and checkpoints. Visually inspected the ten-case grid. No full diagnostic learning or GPU run was performed locally; these scores are not restoration-quality evidence.
+
+## Spatial Task 1 experiment (2026-09-30)
+- Three spatial-model tests passed on local CPU: compressed latent/output shape, no forward bypass, finite gradients and tiny-target loss improvement; stochastic next-update checkpoint equivalence; invalid shape/compression rejection.
+- Existing three validation-report tests passed. New notebook code cells parsed successfully; git diff whitespace check passed.
+- Real-data CPU smoke completed one epoch with 16 training images and 10 validation cases, producing last/best checkpoints and MLflow artifacts under artifacts/spatial-agent-smoke. Spatial evaluator completed 40 validation cases and generated reports/grids. These subset results are execution checks, not performance evidence.
+- Default model: 203,107 parameters, latent 32×8×8. Full GPU training and full validation are pending on Colab. Original model/trainer/data/loss sources were not modified.

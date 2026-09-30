@@ -129,3 +129,6 @@ After the clean-image fitting check, use the [controlled corruption diagnostic](
 ```sh
 python -m training.diagnose_task1_corruptions --device cuda --steps 1000 --output-dir artifacts/task1-corruption-diagnostic
 ```
+
+## Spatial bottleneck experiment
+Use `notebooks/task1_spatial_colab.ipynb` and see [experiment notes](docs/task1_spatial_experiment.md). This preserves the vector baseline and uses separate output folders.
