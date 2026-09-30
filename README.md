@@ -121,3 +121,11 @@ python -m training.diagnose_task1 --device cuda --steps 1000 --output-dir artifa
 ```
 
 This repeatedly fits 16 fixed clean training images from scratch with dropout disabled. Its metrics measure training memorization, not restoration quality on unseen images.
+
+## Tiny-set corruption diagnostic
+
+After the clean-image fitting check, use the [controlled corruption diagnostic](docs/task1_corruption_diagnostic.md) to test restoration of the same 16 images. It trains from scratch with fresh corruptions and reports fixed-case input-versus-output metrics, in a separate folder.
+
+```sh
+python -m training.diagnose_task1_corruptions --device cuda --steps 1000 --output-dir artifacts/task1-corruption-diagnostic
+```

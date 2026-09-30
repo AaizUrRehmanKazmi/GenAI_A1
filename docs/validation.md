@@ -61,3 +61,7 @@ Implemented validation-only evaluator with checkpoint/source/split provenance ch
 Implemented a separate fixed-clean-image diagnostic without modifying baseline model, loss, training source or configuration. A two-update real-data CPU smoke run on two selected training images saved checkpoints, MLflow records and step-0/1/2 grids; inspected the final grid for correct target/output/error layout. This short check is not the proposed 16-image capacity experiment.
 
 An integration test passed for fixed-image loading, grayscale conversion, forced zero dropout, source-image preservation, rejecting overwrite and incompatible resume settings, and exact optimizer/model/history continuation. It compared four uninterrupted updates with two updates plus two resumed updates on a tiny synthetic fixture. GPU execution and the full 1,000-update diagnostic remain for Colab. Baseline files and checkpoints are unchanged.
+
+## Tiny-set corruption diagnostic — 2026-09-30
+
+Added a separate corrupted-input diagnostic while keeping baseline and clean-diagnostic source unchanged. Two tests passed: fixed-case reproducibility without advancing the training RNG, fresh training inputs with preserved targets, and end-to-end resumed/uninterrupted equivalence, dropout configuration and overwrite protection. A two-update CPU smoke run on two real training images produced fixed-case metrics, grids and checkpoints. Visually inspected the ten-case grid. No full diagnostic learning or GPU run was performed locally; these scores are not restoration-quality evidence.
