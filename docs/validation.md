@@ -55,3 +55,9 @@ Colab notebook structure/JSON checked, but GPU, Google Drive integration and Col
 ## Task 1 validation comparison tool — 2026-09-29
 
 Implemented validation-only evaluator with checkpoint/source/split provenance checks, input-versus-restored L1/SSIM/combined loss, equal-condition aggregation, CSV/JSON outputs and example selection. Three tests passed for aggregation weighting, representative/regression selection and absence of invented failures. End-to-end CPU smoke run analyzed 40 fixed cases from four validation images using the local one-batch smoke checkpoint. Twelve representative panels and four unique-image SSIM regressions were generated and visually inspected. The near-uniform predictions belong to the smoke model, not the user's trained Colab checkpoint. The trained epoch-13 checkpoint and full validation run remain to be analyzed in Colab. No official test image was evaluated.
+
+## Clean-image diagnostic — 2026-09-30
+
+Implemented a separate fixed-clean-image diagnostic without modifying baseline model, loss, training source or configuration. A two-update real-data CPU smoke run on two selected training images saved checkpoints, MLflow records and step-0/1/2 grids; inspected the final grid for correct target/output/error layout. This short check is not the proposed 16-image capacity experiment.
+
+An integration test passed for fixed-image loading, grayscale conversion, forced zero dropout, source-image preservation, rejecting overwrite and incompatible resume settings, and exact optimizer/model/history continuation. It compared four uninterrupted updates with two updates plus two resumed updates on a tiny synthetic fixture. GPU execution and the full 1,000-update diagnostic remain for Colab. Baseline files and checkpoints are unchanged.

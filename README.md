@@ -111,3 +111,13 @@ python -m evaluation.evaluate_task1 --checkpoint artifacts/task1-baseline/best.p
 ```
 
 See [Colab analysis instructions and output definitions](docs/task1_validation_analysis.md). Analysis outputs default to a new validation_analysis directory beside the checkpoint. The official test set remains untouched.
+
+## Diagnose the Task 1 reconstruction bottleneck
+
+A separate clean-image fitting experiment preserves the baseline and its checkpoints. See [diagnostic instructions](docs/task1_diagnostic.md).
+
+```sh
+python -m training.diagnose_task1 --device cuda --steps 1000 --output-dir artifacts/task1-diagnostic
+```
+
+This repeatedly fits 16 fixed clean training images from scratch with dropout disabled. Its metrics measure training memorization, not restoration quality on unseen images.
