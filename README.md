@@ -138,3 +138,6 @@ Use `notebooks/task1_spatial16_colab.ipynb` for the five-epoch pilot; see [compa
 
 ## Task 1 hyperparameter screening
 Use `notebooks/task1_optuna_colab.ipynb` after installing `requirements-optimization.txt`. See [search protocol](docs/task1_optuna.md) for fair alpha-independent ranking, resume behavior and screening limitations.
+
+## Task 2 classifier baseline
+Run `notebooks/task2_classifier_colab.ipynb`; see [design and remaining work](docs/research/task2_classifier.md). Includes exactly balanced batches, resumable training and validation classification metrics. Specialists and Optuna are still pending.

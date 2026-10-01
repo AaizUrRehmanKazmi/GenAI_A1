@@ -82,3 +82,8 @@ Added a separate corrupted-input diagnostic while keeping baseline and clean-dia
 - Two unit tests passed: ranking is independent of training-alpha loss, and completed observations reconstruct a usable Optuna study.
 - Real-data debug search completed one trial, then a second invocation with total target2 retained trial0 and completed trial1. Identity baseline, checkpoints, histories, MLflow logs, leaderboard and selected YAML were produced. GPU/full-data search remains pending.
 - Notebook code cells parsed; git diff whitespace checks passed. Existing trainer/model sources were not modified.
+
+## Task2 classifier baseline (2026-10-01)
+- Two CPU tests passed: exact batch class counts, seed replay, clean-target preservation, finite classifier gradients; hand-checked confusion-derived metrics and zero-support handling.
+- One-epoch real-data debug smoke (8 source images/32 training examples,20 validation cases) completed and saved checkpoint, report and MLflow outputs under artifacts/classifier-agent-smoke. This tiny run checks execution only, not classification performance.
+- Notebook cells parsed; git diff whitespace check passed. Full GPU training and classifier-specific interrupted-run equivalence remain unverified. Shared checkpoint helpers were tested previously.

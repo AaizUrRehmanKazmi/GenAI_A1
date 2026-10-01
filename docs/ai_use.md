@@ -23,3 +23,5 @@ Codex implemented the controlled tiny-set corruption diagnostic. It retains the 
 - Added AI-assisted 16×16 latent comparison with unchanged parameter count, separate checkpoint provenance, five-epoch pause and Colab workflow. Larger latent and changed receptive fields are documented; effectiveness remains to be tested on GPU.
 
 - Added AI-assisted Optuna TPE screening across five hyperparameters with fixed-alpha final-epoch ranking, atomic JSON study persistence, unchanged trainer reuse, and a Colab notebook. Search bounds and final candidate choices require user interpretation; no final performance claim is made.
+
+- Implemented AI-assisted Task2 CNN classifier baseline, exactly balanced paired-content batches, classification metrics, resumable training and Colab notebook. Architecture/settings are provisional; tuning, specialists and routing remain pending.
