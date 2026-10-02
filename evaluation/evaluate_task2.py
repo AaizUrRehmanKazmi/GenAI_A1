@@ -7,6 +7,12 @@ import hashlib
 import json
 import math
 from pathlib import Path
+import sys
+
+# Ensure repository root is on sys.path for direct script execution
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
 
 import numpy as np
 from PIL import Image, ImageDraw
@@ -24,41 +30,60 @@ from evaluation.classifier_metrics import metrics_from_confusion
 from evaluation.evaluate_task1 import digest, write_csv
 
 
-def load_checkpoint_bundle(classifier_path, salt_path, blur_path, occlusion_path, device):
+def verify_checkpoint(saved, kind, split, manifest):
+    """Reject mismatched data or inference code; allow trainer-only evolution."""
+    sig = saved['data_signature']
+    if kind == 'classifier':
+        hashes = sig['hashes']
+        sources = ['src/models/corruption_classifier.py', 'src/data/pets_dataset.py', 'src/data/corruptions.py']
+        files = {'data/splits/pets_val.json': split, 'data/manifests/pets_val_corruptions.json': manifest}
+    else:
+        hashes = sig['source']
+        sources = ['src/models/spatial16_ae.py', 'src/losses/reconstruction.py', 'src/data/pets_dataset.py', 'src/data/corruptions.py']
+        if kind != 'task1': sources.append('src/models/specialist_ae.py')
+        files = {}
+        for path in [split, manifest]:
+            if sig['files'].get(path.name) != digest(path):
+                raise ValueError(f'{kind}: validation fingerprint mismatch: {path.name}')
+    for name in sources:
+        if hashes.get(name) != digest(REPO_ROOT / name):
+            raise ValueError(f'{kind}: inference source mismatch: {name}')
+    for name, path in files.items():
+        if hashes.get(name) != digest(path):
+            raise ValueError(f'{kind}: validation fingerprint mismatch: {name}')
+    return bool(sig['train_limit'] or sig['val_images'])
+
+
+def load_checkpoint_bundle(classifier_path, salt_path, blur_path, occlusion_path, device, split, manifest):
     """Load classifier and 3 specialist models, verifying their configurations."""
-    c_saved = torch.load(classifier_path, map_location='cpu', weights_only=False)
+    c_saved = torch.load(classifier_path, map_location='cpu', weights_only=True)
     if c_saved.get('version') != 1:
         raise ValueError('Unsupported classifier checkpoint format.')
+    c_debug = verify_checkpoint(c_saved, 'classifier', split, manifest)
     classifier = CorruptionClassifier(**c_saved['config']['model'])
     classifier.load_state_dict(c_saved['model'])
 
     specialists = {}
+    expert_metadata = {}
     for name, path in [('salt', salt_path), ('blur', blur_path), ('occlusion', occlusion_path)]:
-        s_saved = torch.load(path, map_location='cpu', weights_only=False)
+        s_saved = torch.load(path, map_location='cpu', weights_only=True)
         if s_saved.get('version') != 1:
             raise ValueError(f'Unsupported specialist checkpoint format for {name}.')
         if s_saved['config'].get('architecture') != 'specialist16_ae_v1':
             raise ValueError(f'Checkpoint for {name} is not specialist16_ae_v1.')
         if s_saved['config'].get('condition') != name:
             raise ValueError(f'Checkpoint at {path} is for condition {s_saved["config"].get("condition")}, expected {name}.')
+        debug = verify_checkpoint(s_saved, name, split, manifest)
+        expert_metadata[name] = {'path': str(path), 'sha256': digest(path), 'epoch': s_saved['progress']['epoch'], 'debug_subset': debug}
         expert = SpecialistAutoencoder(**s_saved['config']['model'])
         expert.load_state_dict(s_saved['model'])
         specialists[name] = expert
 
     router = HardRouter(classifier, specialists['salt'], specialists['blur'], specialists['occlusion']).to(device)
     router.eval()
-    bundle_metadata = {
-        'classifier': {'path': str(classifier_path), 'epoch': c_saved['progress'].get('epoch')},
-        'salt': {'path': str(salt_path), 'epoch': specialists['salt']},
-        'blur': {'path': str(blur_path)},
-        'occlusion': {'path': str(occlusion_path)}
-    }
-    return router, c_saved, {
-        'classifier': {'path': str(classifier_path), 'epoch': c_saved['progress'].get('epoch'), 'sha256': digest(classifier_path)},
-        'salt': {'path': str(salt_path), 'sha256': digest(salt_path)},
-        'blur': {'path': str(blur_path), 'sha256': digest(blur_path)},
-        'occlusion': {'path': str(occlusion_path), 'sha256': digest(occlusion_path)},
-    }
+    metadata = {'classifier': {'path': str(classifier_path), 'epoch': c_saved['progress']['epoch'],
+                'sha256': digest(classifier_path), 'debug_subset': c_debug}, **expert_metadata}
+    return router, c_saved, metadata
 
 
 def summarize_task2(rows, confusion_matrix, cross_entropy):
@@ -69,6 +94,9 @@ def summarize_task2(rows, confusion_matrix, cross_entropy):
         'pred_l1', 'pred_ssim', 'pred_loss', 'pred_l1_gain', 'pred_ssim_gain', 'pred_loss_gain',
         'ssim_routing_cost', 'l1_routing_cost'
     ]
+
+    if rows and 'task1_l1' in rows[0]:
+        metrics += ['task1_l1', 'task1_ssim', 'task1_loss']
 
     def aggregate(group):
         count = len(group)
@@ -180,15 +208,7 @@ def select_examples_task2(rows):
             if len(failures) >= 6:
                 break
 
-    # If few routing errors occurred, add largest SSIM regressions from remaining corrupted images
-    if len(failures) < 4:
-        for r in sorted(rows, key=lambda x: (x['pred_ssim_gain'], x['index'])):
-            if r['true_condition'] != 'clean' and r['image_id'] not in seen:
-                failures.append(r)
-                seen.add(r['image_id'])
-                if len(failures) >= 4:
-                    break
-
+    # Only show actual misroutes; do not label correct-routing restoration errors as routing failures
     return representatives, failures
 
 
@@ -283,8 +303,19 @@ def run(args):
     source_digests = {f: digest(REPO_ROOT / f) for f in source_files}
 
     router, classifier_saved, ckpt_provenance = load_checkpoint_bundle(
-        c_path, s_path, b_path, o_path, device
+        c_path, s_path, b_path, o_path, device, split, manifest
     )
+
+    universal = None
+    if args.task1_checkpoint:
+        from src.models.spatial16_ae import Spatial16Autoencoder
+        saved = torch.load(args.task1_checkpoint, map_location='cpu', weights_only=True)
+        if saved.get('version') != 1 or saved['config'].get('architecture') != 'spatial16_ae_v1':
+            raise ValueError('Expected Task1 spatial16 checkpoint')
+        debug = verify_checkpoint(saved, 'task1', split, manifest)
+        universal = Spatial16Autoencoder(**saved['config']['model']).to(device)
+        universal.load_state_dict(saved['model']); universal.eval()
+        ckpt_provenance['task1'] = {'sha256': digest(args.task1_checkpoint), 'epoch': saved['progress']['epoch'], 'debug_subset': debug}
 
     alpha = args.alpha
     criterion = ReconstructionLoss(alpha=alpha).to(device)
@@ -326,6 +357,7 @@ def run(args):
             oracle_rec = {k: v.cpu().tolist() for k, v in criterion(oracle_outputs, targets).items()}
             pred_rec = {k: v.cpu().tolist() for k, v in criterion(pred_outputs, targets).items()}
 
+            task1_rec = {k: v.cpu().tolist() for k,v in criterion(universal(images), targets).items()} if universal is not None else None
             for i in range(len(images)):
                 t_lbl = true_labels[i].item()
                 p_lbl = pred_labels[i].item()
@@ -374,6 +406,10 @@ def run(args):
                     'l1_routing_cost': prd_l1 - orc_l1,
                     'ssim_routing_cost': orc_ssim - prd_ssim,
                 }
+                for label, name in enumerate(CLASSES):
+                    row['prob_' + name] = pred_probs[i, label].item()
+                if task1_rec is not None:
+                    row.update({f'task1_{k}': task1_rec[k][i] for k in ['l1','ssim','loss']})
                 if not all(math.isfinite(v) for v in row.values() if isinstance(v, float)):
                     raise ValueError('Non-finite metrics encountered during evaluation.')
                 rows.append(row)
@@ -474,9 +510,13 @@ def run(args):
         '',
         'Official test images were not evaluated; analysis restricted to validation split.'
     ]
-    if args.val_images:
+    if args.val_images or any(v['debug_subset'] for v in ckpt_provenance.values()):
         report.insert(2, '**DEBUG SUBSET CHECK: not final performance evidence.**\n')
 
+    report += ['', '## Fixed-weight overall comparison', '', '| Method | L1 | SSIM | Loss |', '|---|---:|---:|---:|']
+    for method in ['input', 'oracle', 'pred'] + (['task1'] if universal is not None else []):
+        report.append(f"| {method} | {b[method+'_l1']:.6f} | {b[method+'_ssim']:.6f} | {b[method+'_loss']:.6f} |")
+    report += ['', 'All methods use the same evaluation alpha, regardless of training alpha. Negative routing cost means predicted routing scored better than oracle; oracle is not a guaranteed metric upper bound. Error panels use fixed [0,1] scale.']
     (output / 'README.md').write_text('\n'.join(report) + '\n')
     print('\n'.join(report), flush=True)
     print(f'Task 2 validation analysis saved to {output}', flush=True)
@@ -485,6 +525,7 @@ def run(args):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--config', type=Path, default=None, help='Optional task2 YAML configuration')
+    parser.add_argument('--task1-checkpoint', type=Path, help='Optional selected Task1 spatial16 best.pt for same-case comparison')
     parser.add_argument('--classifier-checkpoint', type=Path, default=None)
     parser.add_argument('--salt-checkpoint', type=Path, default=None)
     parser.add_argument('--blur-checkpoint', type=Path, default=None)
@@ -497,7 +538,7 @@ def main():
     parser.add_argument('--batch-size', type=int, default=16)
     parser.add_argument('--cpu-threads', type=int, default=2)
     parser.add_argument('--val-images', type=int, default=0, help='Debug only; 0 evaluates full validation split.')
-    parser.add_argument('--alpha', type=float, default=0.5, help='Reconstruction loss alpha balance.')
+    parser.add_argument('--alpha', type=float, default=0.8, help='Fixed comparison (not training) reconstruction loss alpha balance.')
     args = parser.parse_args()
 
     if args.batch_size < 1 or args.cpu_threads < 1 or args.val_images < 0:

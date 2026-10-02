@@ -144,3 +144,11 @@ Run `notebooks/task2_classifier_colab.ipynb`; see [design and remaining work](do
 
 ## Task 2 specialists
 Use `notebooks/task2_specialists_colab.ipynb` for separate salt/blur/occlusion pilots when GPU is available. See [design and pending work](docs/research/task2_specialists.md). Includes independent training and a tested hard router with exact clean identity; full routing evaluation and tuning are pending.
+
+## Resume occlusion on Kaggle
+Import `notebooks/task2_specialists_kaggle.ipynb`, attach a private dataset containing the existing occlusion run folder, and set the checkpoint path. It verifies source provenance, exposes one GPU, reconstructs the base-seed config, resumes to the original target, and creates a downloadable output backup. Save/download outputs before ending the session. Kaggle execution has not been verified locally.
+
+For classifier training on Kaggle, import `notebooks/task2_classifier_kaggle.ipynb`. It starts fresh without specialist checkpoints, resumes existing classifier output, and creates task2_classifier_backup.zip. Kaggle output is not automatically saved to Drive.
+
+## Task 2 routed validation
+Use `notebooks/task2_routing_kaggle.ipynb` to compare unchanged input, oracle routing, predicted routing and the selected Task1 model. Attach the five checkpoint folders first. See [evaluation notes](docs/task2_routing_validation.md).

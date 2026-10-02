@@ -29,3 +29,9 @@ Codex implemented the controlled tiny-set corruption diagnostic. It retains the 
 - Added AI-assisted independent specialist baseline training, condition-filtered validation, hard routing and Colab pilots. Settings reuse Task1 as a hypothesis; Task2 Optuna, full routing evaluation and export remain pending.
 
 - Implemented AI-assisted Task 2 HardRouter evaluation pipeline (`evaluation/evaluate_task2.py`) comparing Oracle versus Predicted routing, classification metrics and confusion matrix, routing cost quantification, error taxonomy, visual grids, and a dedicated Colab evaluation notebook. Added resumable Optuna screening scripts for classifier and specialists (`optimization/optimize_task2_classifier.py`, `optimization/optimize_task2_specialists.py`) with atomic study persistence and unit tests. All findings remain provisional and require student verification on full GPU checkpoints.
+
+- Added AI-assisted Kaggle migration notebook to resume an existing occlusion checkpoint without changing its training configuration. User must attach the private checkpoint dataset and preserve output backups.
+
+- Added AI-assisted Kaggle classifier notebook with explicit manual backup and optional attached-checkpoint resume.
+
+- Extended the existing Task2 evaluator with enforced checkpoint provenance, safe checkpoint loading, optional Task1 comparison, fixed-alpha ranking and actual-misroute example selection. Added Kaggle orchestration; full trained-model evaluation remains user-run.

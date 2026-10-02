@@ -98,3 +98,16 @@ Added a separate corrupted-input diagnostic while keeping baseline and clean-dia
 - Real-data CPU smoke evaluation completed 40 validation cases using existing smoke checkpoints: verified end-to-end HardRouter execution, confusion matrix calculation, Oracle vs Predicted routing comparison, CSV/JSON metrics exports, and 5-column representative/routing-failure visual grids.
 - Added resumable Optuna screening scripts for classifier (optimization/optimize_task2_classifier.py) and specialists (optimization/optimize_task2_specialists.py) with atomic state persistence.
 - Added Task 2 evaluation Colab notebook (notebooks/task2_evaluation_colab.ipynb). Total 56 unit tests passing across entire repository. Full GPU runs remain pending on Colab.
+
+## Kaggle migration notebook (2026-10-02)
+- Added occlusion resume notebook with explicit checkpoint selection, condition/debug checks, source verification, one visible GPU for single-GPU RNG compatibility, read-only input copying, seed-offset reversal and backup archive.
+- All code cells parsed as Python; no fingerprinted training/model code modified. Actual Kaggle provisioning, dependencies, GPU run and output persistence are not yet verified.
+
+## Kaggle classifier notebook (2026-10-02)
+- Added fresh/resumed classifier workflow with GPU check, dataset setup, metrics display and ZIP backup. Code cells parsed successfully; actual Kaggle execution remains pending. Existing classifier/trainer sources are unchanged.
+
+## Full routed evaluator implementation (2026-10-02)
+- Extended pre-existing uncommitted evaluator rather than replacing its reporting logic. Added safe loading, enforced inference/data fingerprints, optional Task1 comparison, all classifier probabilities, fixed alpha0.8 default, checkpoint epoch/debug metadata and actual-misroute-only examples.
+- Two tests passed: equal-condition aggregation with optional Task1 metrics/no fabricated failures; validation provenance mismatch rejection.
+- End-to-end CPU smoke evaluated40 cases with all five local debug checkpoints, producing JSON/CSV/report and image grids. Debug status was displayed. Full trained-model Kaggle run is pending; smoke scores are not performance evidence.
+- Kaggle notebook cells parsed; git diff whitespace checks passed. No model/trainer/data sources changed.
