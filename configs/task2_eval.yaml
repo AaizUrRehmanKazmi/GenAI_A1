@@ -1,0 +1,9 @@
+# Task 2 Evaluation Configuration
+task: 2
+checkpoints:
+  classifier: artifacts/classifier-agent-smoke/best.pt
+  salt: artifacts/specialist-salt-agent-smoke/best.pt
+  blur: artifacts/specialist-blur-agent-smoke/best.pt
+  occlusion: artifacts/specialist-occlusion-agent-smoke/best.pt
+loss:
+  alpha: 0.5

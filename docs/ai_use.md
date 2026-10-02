@@ -27,3 +27,5 @@ Codex implemented the controlled tiny-set corruption diagnostic. It retains the 
 - Implemented AI-assisted Task2 CNN classifier baseline, exactly balanced paired-content batches, classification metrics, resumable training and Colab notebook. Architecture/settings are provisional; tuning, specialists and routing remain pending.
 
 - Added AI-assisted independent specialist baseline training, condition-filtered validation, hard routing and Colab pilots. Settings reuse Task1 as a hypothesis; Task2 Optuna, full routing evaluation and export remain pending.
+
+- Implemented AI-assisted Task 2 HardRouter evaluation pipeline (`evaluation/evaluate_task2.py`) comparing Oracle versus Predicted routing, classification metrics and confusion matrix, routing cost quantification, error taxonomy, visual grids, and a dedicated Colab evaluation notebook. Added resumable Optuna screening scripts for classifier and specialists (`optimization/optimize_task2_classifier.py`, `optimization/optimize_task2_specialists.py`) with atomic study persistence and unit tests. All findings remain provisional and require student verification on full GPU checkpoints.

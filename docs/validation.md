@@ -92,3 +92,9 @@ Added a separate corrupted-input diagnostic while keeping baseline and clean-dia
 - Three CPU tests passed: independent parameter updates, condition-only manifest selection, predicted/oracle routing with exact clean identity and skipped unused experts.
 - Separate real-data CPU debug smokes completed for salt, blur and occlusion (4 train images and3 fixed validation cases each). Salt paused after epoch1 and resumed through epoch2. Generated checkpoint/history/MLflow artifacts. These are execution checks, not restoration evidence; GPU pilots remain pending.
 - Notebook code cells parsed and git diff whitespace check passed. Task1 and classifier source files were left unchanged. Full routing evaluation, specialist tuning and ONNX remain pending.
+
+## Task2 evaluation pipeline and Optuna screening (2026-10-02)
+- Seven unit tests passed in tests/test_evaluate_task2.py and tests/test_optimize_task2.py: condition-balanced metric aggregation, routing error taxonomy (clean-as-corrupted, corrupted-as-clean, cross-corruption), representative/failure selection, clean identity routing cost, classifier and specialist Optuna study reconstruction and ranking invariance.
+- Real-data CPU smoke evaluation completed 40 validation cases using existing smoke checkpoints: verified end-to-end HardRouter execution, confusion matrix calculation, Oracle vs Predicted routing comparison, CSV/JSON metrics exports, and 5-column representative/routing-failure visual grids.
+- Added resumable Optuna screening scripts for classifier (optimization/optimize_task2_classifier.py) and specialists (optimization/optimize_task2_specialists.py) with atomic state persistence.
+- Added Task 2 evaluation Colab notebook (notebooks/task2_evaluation_colab.ipynb). Total 56 unit tests passing across entire repository. Full GPU runs remain pending on Colab.
