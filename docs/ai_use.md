@@ -35,3 +35,5 @@ Codex implemented the controlled tiny-set corruption diagnostic. It retains the 
 - Added AI-assisted Kaggle classifier notebook with explicit manual backup and optional attached-checkpoint resume.
 
 - Extended the existing Task2 evaluator with enforced checkpoint provenance, safe checkpoint loading, optional Task1 comparison, fixed-alpha ranking and actual-misroute example selection. Added Kaggle orchestration; full trained-model evaluation remains user-run.
+
+- Reviewed existing Task2 search implementations; added separate resumable classifier search trainer, required specialist channel tuning, exact baseline LR and Kaggle search/backup notebook. Search bounds are provisional and require empirical/user interpretation.

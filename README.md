@@ -152,3 +152,6 @@ For classifier training on Kaggle, import `notebooks/task2_classifier_kaggle.ipy
 
 ## Task 2 routed validation
 Use `notebooks/task2_routing_kaggle.ipynb` to compare unchanged input, oracle routing, predicted routing and the selected Task1 model. Attach the five checkpoint folders first. See [evaluation notes](docs/task2_routing_validation.md).
+
+## Task 2 tuning
+Use `notebooks/task2_optuna_kaggle.ipynb`, starting with mode `classifier`. Separate salt/blur/occlusion studies tune all required specialist parameters including channel configuration. See [budgets, objectives and resume rules](docs/task2_optuna.md).

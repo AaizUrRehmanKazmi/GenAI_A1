@@ -11,7 +11,7 @@ import torch
 import yaml
 
 from src.data.pets_dataset import REPO_ROOT
-from training.train_classifier import run as train_classifier_run
+from training.train_classifier_search import run as train_classifier_run
 
 
 def score(row):
@@ -49,7 +49,7 @@ def run(args):
     base = yaml.safe_load(args.config.read_text())
 
     files = [
-        'optimization/optimize_task2_classifier.py', 'training/train_classifier.py',
+        'optimization/optimize_task2_classifier.py', 'training/train_classifier.py', 'training/train_classifier_search.py', 'training/train_task1.py',
         'src/models/corruption_classifier.py', 'src/data/classifier_batches.py',
         'src/data/pets_dataset.py', 'src/data/corruptions.py',
         'evaluation/classifier_metrics.py',
@@ -96,7 +96,7 @@ def run(args):
         config['training']['learning_rate'] = params['learning_rate']
         config['training']['batch_size'] = params['batch_size']
         config['training']['weight_decay'] = params['weight_decay']
-        config['training']['epochs'] = args.screen_epochs
+        # Keep full target epochs for later compatible continuation.
 
         config_path = root / f'trial_{number:03d}.yaml'
         config_path.write_text(yaml.safe_dump(config))
@@ -108,7 +108,7 @@ def run(args):
 
         print(f'Trial {number+1}/{args.trials}: {params}', flush=True)
         train_classifier_run(SimpleNamespace(
-            config=config_path, raw_dir=args.raw_dir, output_dir=out,
+            config=config_path, stop_after_epoch=args.screen_epochs, raw_dir=args.raw_dir, output_dir=out,
             resume=last if last.exists() else None, device=args.device,
             max_hours=remaining / 3600, train_limit=args.train_limit, val_images=args.val_images
         ))
@@ -149,6 +149,8 @@ def main():
     p.add_argument('--train-limit', type=int, default=0)
     p.add_argument('--val-images', type=int, default=0)
     a = p.parse_args()
+    base = yaml.safe_load(a.config.read_text())
+    if a.screen_epochs > base['training']['epochs']: p.error('Screening exceeds full epoch target')
     if min(a.trials, a.screen_epochs, a.max_hours) <= 0 or min(a.train_limit, a.val_images) < 0:
         p.error('Invalid trial, epoch, time or subset limits.')
     run(a)

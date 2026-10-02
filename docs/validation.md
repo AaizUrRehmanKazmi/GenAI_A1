@@ -111,3 +111,8 @@ Added a separate corrupted-input diagnostic while keeping baseline and clean-dia
 - Two tests passed: equal-condition aggregation with optional Task1 metrics/no fabricated failures; validation provenance mismatch rejection.
 - End-to-end CPU smoke evaluated40 cases with all five local debug checkpoints, producing JSON/CSV/report and image grids. Debug status was displayed. Full trained-model Kaggle run is pending; smoke scores are not performance evidence.
 - Kaggle notebook cells parsed; git diff whitespace checks passed. No model/trainer/data sources changed.
+
+## Task2 search completion (2026-10-02)
+- Four objective/study reconstruction tests passed. Classifier and blur one-trial CPU debug searches completed and produced study, leaderboard, selected config and checkpoint files.
+- Classifier search checkpoint resumed from epoch1 through epoch2 using the new search trainer while retaining target10. Original classifier/specialist trainer and model sources are unchanged.
+- Notebook cells parsed and diff whitespace checks passed. Full GPU searches are pending; smoke metrics are not final evidence. Searches use separate folders and provisional winners.

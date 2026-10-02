@@ -24,9 +24,12 @@ def distributions():
         'learning_rate': optuna.distributions.FloatDistribution(0.0002, 0.002, log=True),
         'batch_size': optuna.distributions.CategoricalDistribution([8, 16]),
         'latent_channels': optuna.distributions.CategoricalDistribution([16, 32, 64]),
-        'dropout': optuna.distributions.CategoricalDistribution([0.0, 0.05, 0.1]),
+        'channels_preset': optuna.distributions.CategoricalDistribution(['standard', 'wide']),
         'alpha': optuna.distributions.CategoricalDistribution([0.5, 0.65, 0.8]),
     }
+
+
+CHANNELS_MAP = {'standard': [16,32,64,128], 'wide': [32,64,128,256]}
 
 
 def write_json(path, value):
@@ -45,7 +48,7 @@ def run(args):
         'optimization/optimize_task2_specialists.py', 'training/train_specialists.py',
         'src/models/specialist_ae.py', 'src/models/spatial16_ae.py',
         'src/losses/reconstruction.py', 'src/data/pets_dataset.py',
-        'src/data/corruptions.py', 'training/specialist_validation.py',
+        'src/data/corruptions.py', 'training/specialist_validation.py', 'training/train_task1.py',
         'data/splits/pets_train.json', 'data/splits/pets_val.json',
         'data/manifests/pets_val_corruptions.json'
     ]
@@ -77,7 +80,7 @@ def run(args):
             trial = study.ask(distributions())
             params = trial.params
             if number == 0:
-                params = dict(learning_rate=0.0007, batch_size=16, latent_channels=32, dropout=0.0, alpha=0.5)
+                params = dict(learning_rate=0.0007116061848544356, batch_size=16, latent_channels=32, channels_preset='standard', alpha=0.5)
             pending = {'number': number, 'state': 'RUNNING', 'params': params}
             state['trials'].append(pending)
             write_json(state_path, state)
@@ -86,7 +89,8 @@ def run(args):
         params = pending['params']
         config = copy.deepcopy(base)
         config['model']['latent_channels'] = params['latent_channels']
-        config['model']['dropout'] = params['dropout']
+        config['model']['channels'] = CHANNELS_MAP[params['channels_preset']]
+        config['model']['dropout'] = 0.0
         config['training']['learning_rate'] = params['learning_rate']
         config['training']['batch_size'] = params['batch_size']
         config['loss']['alpha'] = params['alpha']

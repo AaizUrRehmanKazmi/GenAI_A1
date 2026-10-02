@@ -30,7 +30,7 @@ class Task2OptimizationTest(unittest.TestCase):
         self.assertLess(specialist_score(dict(val_l1=0.03, val_ssim=0.85)), specialist_score(a))
 
     def test_specialist_optuna_study_reconstruction(self):
-        params = dict(learning_rate=0.0007, batch_size=16, latent_channels=32, dropout=0.0, alpha=0.5)
+        params = dict(learning_rate=0.0007, batch_size=16, latent_channels=32, channels_preset='standard', alpha=0.5)
         study = optuna.create_study(direction='minimize', sampler=optuna.samplers.TPESampler(seed=42, n_startup_trials=4))
         study.add_trial(optuna.trial.create_trial(params=params, distributions=specialist_distributions(), value=0.10))
         trial = study.ask(specialist_distributions())
