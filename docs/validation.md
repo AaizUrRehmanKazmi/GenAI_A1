@@ -87,3 +87,8 @@ Added a separate corrupted-input diagnostic while keeping baseline and clean-dia
 - Two CPU tests passed: exact batch class counts, seed replay, clean-target preservation, finite classifier gradients; hand-checked confusion-derived metrics and zero-support handling.
 - One-epoch real-data debug smoke (8 source images/32 training examples,20 validation cases) completed and saved checkpoint, report and MLflow outputs under artifacts/classifier-agent-smoke. This tiny run checks execution only, not classification performance.
 - Notebook cells parsed; git diff whitespace check passed. Full GPU training and classifier-specific interrupted-run equivalence remain unverified. Shared checkpoint helpers were tested previously.
+
+## Task2 specialists (2026-10-01)
+- Three CPU tests passed: independent parameter updates, condition-only manifest selection, predicted/oracle routing with exact clean identity and skipped unused experts.
+- Separate real-data CPU debug smokes completed for salt, blur and occlusion (4 train images and3 fixed validation cases each). Salt paused after epoch1 and resumed through epoch2. Generated checkpoint/history/MLflow artifacts. These are execution checks, not restoration evidence; GPU pilots remain pending.
+- Notebook code cells parsed and git diff whitespace check passed. Task1 and classifier source files were left unchanged. Full routing evaluation, specialist tuning and ONNX remain pending.

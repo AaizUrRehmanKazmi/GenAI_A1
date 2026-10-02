@@ -141,3 +141,6 @@ Use `notebooks/task1_optuna_colab.ipynb` after installing `requirements-optimiza
 
 ## Task 2 classifier baseline
 Run `notebooks/task2_classifier_colab.ipynb`; see [design and remaining work](docs/research/task2_classifier.md). Includes exactly balanced batches, resumable training and validation classification metrics. Specialists and Optuna are still pending.
+
+## Task 2 specialists
+Use `notebooks/task2_specialists_colab.ipynb` for separate salt/blur/occlusion pilots when GPU is available. See [design and pending work](docs/research/task2_specialists.md). Includes independent training and a tested hard router with exact clean identity; full routing evaluation and tuning are pending.

@@ -1,4 +1,6 @@
-"""TODO: specialist ae. Record alternatives and evidence in docs/research before implementation."""
+"""Independent specialist instances using the provisional 16x16 architecture."""
+from .spatial16_ae import Spatial16Autoencoder
 
-def build(*args, **kwargs):
-    raise NotImplementedError("Research decision and implementation pending: specialist_ae")
+class SpecialistAutoencoder(Spatial16Autoencoder):
+    """No shared weights or pretrained Task1 initialization."""
+    pass
