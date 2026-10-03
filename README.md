@@ -155,3 +155,5 @@ Use `notebooks/task2_routing_kaggle.ipynb` to compare unchanged input, oracle ro
 
 ## Task 2 tuning
 Use `notebooks/task2_optuna_kaggle.ipynb`, starting with mode `classifier`. Separate salt/blur/occlusion studies tune all required specialist parameters including channel configuration. See [budgets, objectives and resume rules](docs/task2_optuna.md).
+
+Task 2 selected checkpoint packaging and verified ONNX export: [delivery guide](docs/task2_delivery.md).

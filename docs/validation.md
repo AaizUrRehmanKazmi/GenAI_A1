@@ -116,3 +116,5 @@ Added a separate corrupted-input diagnostic while keeping baseline and clean-dia
 - Four objective/study reconstruction tests passed. Classifier and blur one-trial CPU debug searches completed and produced study, leaderboard, selected config and checkpoint files.
 - Classifier search checkpoint resumed from epoch1 through epoch2 using the new search trainer while retaining target10. Original classifier/specialist trainer and model sources are unchanged.
 - Notebook cells parsed and diff whitespace checks passed. Full GPU searches are pending; smoke metrics are not final evidence. Searches use separate folders and provisional winners.
+
+- 2026-10-03: Four selected Task 2 ONNX graphs passed checker and sampled CPU PyTorch/ORT parity; routing identity/mixed dispatch passed. See task2_delivery.md and generated manifest. Three routing-contract tests passed.
