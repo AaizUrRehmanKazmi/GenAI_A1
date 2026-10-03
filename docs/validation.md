@@ -126,3 +126,5 @@ Added a separate corrupted-input diagnostic while keeping baseline and clean-dia
 - Task 3 trainer: tiny CPU paused/resumed run exactly matched uninterrupted model tensors, progress/history and RNG through two warm-up epochs and one joint epoch. Notebook cells compile. CUDA and full-split training pending.
 
 - Task 3 detailed evaluator: 3 aggregation/selection tests passed; real epoch-10 checkpoint smoke evaluation passed on 40 validation cases; routing heatmap inspected and notebook cells compile. Full CPU run was stopped after progress at 408/7360 because of runtime cost; no full-set evaluation report claimed. Run full evaluation on Kaggle GPU.
+
+- Task 3 Optuna: three objective/config/dimension tests passed and a one-trial CPU diagnostic completed three epochs with warm-up/joint transition. Notebook code cells compile. Full eight-trial GPU search pending.

@@ -1,11 +1,157 @@
-"""Skeleton entry point: optimize_task3."""
+"""Sequential Optuna screening for Task 3 soft mixture with atomic JSON persistence."""
 import argparse
+import copy
+import hashlib
+import json
+from pathlib import Path
+import time
+from types import SimpleNamespace
+import optuna
+import torch
+import yaml
+
+from src.data.pets_dataset import REPO_ROOT
+from training.train_task3_moe import run as train_moe
+from exports.task2_bundle import SELECTED, digest
+
+
+def score(row):
+    """Consistent ranking objective across trials with different training alphas."""
+    return 0.8 * float(row['val_l1']) + 0.2 * (1.0 - float(row['val_ssim']))
+
+
+def distributions():
+    return {
+        'joint_learning_rate': optuna.distributions.FloatDistribution(5e-6, 5e-5, log=True),
+        'temperature': optuna.distributions.CategoricalDistribution([0.7, 1.0, 1.5, 2.0]),
+        'classification_weight': optuna.distributions.CategoricalDistribution([0.03, 0.1, 0.3]),
+        'balance_weight': optuna.distributions.CategoricalDistribution([0.0, 0.01, 0.05]),
+        'alpha': optuna.distributions.CategoricalDistribution([0.65, 0.8, 0.9]),
+    }
+
+
+def trial_config(base, params):
+    config = copy.deepcopy(base)
+    config['training']['joint_learning_rate'] = params['joint_learning_rate']
+    config['model']['temperature'] = params['temperature']
+    config['loss'].update(l1_weight=params['alpha'], ssim_weight=1-params['alpha'],
+        classification_weight=params['classification_weight'], balance_weight=params['balance_weight'])
+    return config
+
+
+def write_json(path, value):
+    tmp = path.with_suffix('.tmp')
+    tmp.write_text(json.dumps(value, indent=2) + '\n')
+    tmp.replace(path)
+
+
+def run(args):
+    started = time.monotonic()
+    root = args.output_dir.resolve()
+    root.mkdir(parents=True, exist_ok=True)
+    base = yaml.safe_load(args.config.read_text())
+
+    files = ['optimization/optimize_task3.py', 'training/train_task3_moe.py',
+        'training/train_task1.py', 'src/models/soft_moe.py', 'src/models/spatial16_ae.py',
+        'src/models/specialist_ae.py', 'src/models/corruption_classifier.py',
+        'src/losses/moe_loss.py', 'src/losses/reconstruction.py', 'src/data/moe_batches.py',
+        'src/data/pets_dataset.py', 'src/data/corruptions.py', 'exports/task2_bundle.py',
+        'data/splits/pets_train.json', 'data/splits/pets_val.json',
+        'data/manifests/pets_val_corruptions.json']
+    initialization = {k: digest(args.bundle / k / 'best.pt') for k in SELECTED}
+    if initialization != {k: v[2] for k,v in SELECTED.items()}:
+        raise ValueError('Use selected Task 2 initialization bundle')
+    protocol = {'base': base, 'screen_epochs': args.screen_epochs,
+        'train_limit': args.train_limit, 'val_images': args.val_images,
+        'optuna': optuna.__version__, 'initialization': initialization,
+        'objective': '0.8*L1 + 0.2*(1-SSIM) at final screening epoch',
+        'hashes': {f: digest(REPO_ROOT / f) for f in files}}
+
+    state_path = root / 'study.json'
+    state = json.loads(state_path.read_text()) if state_path.exists() else {'protocol': protocol, 'trials': []}
+    if state['protocol'] != protocol:
+        raise ValueError('Search protocol or source code changed; choose a new output directory.')
+    write_json(state_path, state)
+
+    while len([t for t in state['trials'] if t['state'] == 'COMPLETE']) < args.trials:
+        remaining = args.max_hours * 3600 - (time.monotonic() - started)
+        if remaining < 60:
+            break
+
+        pending = next((t for t in state['trials'] if t['state'] == 'RUNNING'), None)
+        if pending is None:
+            number = len(state['trials'])
+            study = optuna.create_study(direction='minimize', sampler=optuna.samplers.TPESampler(seed=42 + number, n_startup_trials=4))
+            for t in state['trials']:
+                study.add_trial(optuna.trial.create_trial(params=t['params'], distributions=distributions(), value=t['score']))
+            trial = study.ask(distributions())
+            params = trial.params
+            if number == 0:
+                params = dict(joint_learning_rate=base['training']['joint_learning_rate'], temperature=base['model']['temperature'], classification_weight=base['loss']['classification_weight'], balance_weight=base['loss']['balance_weight'], alpha=base['loss']['l1_weight'])
+            pending = {'number': number, 'state': 'RUNNING', 'params': params}
+            state['trials'].append(pending)
+            write_json(state_path, state)
+
+        number = pending['number']
+        params = pending['params']
+        config = trial_config(base, params)
+
+        config_path = root / f'trial_{number:03d}.yaml'
+        config_path.write_text(yaml.safe_dump(config))
+        out = root / f'trial_{number:03d}'
+        last = out / 'last.pt'
+
+        if out.exists() and not last.exists() and any(out.iterdir()):
+            raise ValueError(f'Interrupted before first checkpoint: preserve/rename {out} then rerun.')
+
+        print(f'Trial {number+1}/{args.trials}: {params}', flush=True)
+        train_moe(SimpleNamespace(config=config_path, bundle=args.bundle,
+            output_dir=out, resume=last if last.exists() else None,
+            stop_after_epoch=args.screen_epochs, max_steps=0, device=args.device,
+            max_hours=remaining / 3600, train_limit=args.train_limit, val_images=args.val_images))
+
+        history_file = out / 'history.json'
+        if not history_file.exists():
+            break
+        history = json.loads(history_file.read_text())
+        if not history or history[-1]['epoch'] < args.screen_epochs:
+            break
+
+        row = history[-1]
+        pending.update(state='COMPLETE', score=score(row), metrics=row, checkpoint=str(last))
+        write_json(state_path, state)
+
+        completed = [t for t in state['trials'] if t['state'] == 'COMPLETE']
+        winner = min(completed, key=lambda t: t['score'])
+        best_config = yaml.safe_load((root / f"trial_{winner['number']:03d}.yaml").read_text())
+        (root / 'selected_config.yaml').write_text(yaml.safe_dump(best_config))
+        write_json(root / 'leaderboard.json', {
+            'provisional': True,
+            'task': 3,
+            'debug_subset': bool(args.train_limit or args.val_images),
+            'ranked_trials': sorted(completed, key=lambda t: t['score'])
+        })
+
+    print(f'Search state saved to {state_path}. Rerun to continue; trials is a total target.', flush=True)
+
 
 def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--config', required=True, help='Path to task YAML configuration')
-    parser.parse_args()
-    parser.exit(2, 'Not implemented: complete the research decision and this pipeline first.\n')
+    p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--bundle', type=Path, required=True)
+    p.add_argument('--config', type=Path, default=REPO_ROOT / 'configs/task3.yaml')
+    p.add_argument('--output-dir', type=Path, required=True)
+    p.add_argument('--trials', type=int, default=8)
+    p.add_argument('--screen-epochs', type=int, default=5)
+    p.add_argument('--max-hours', type=float, default=4)
+    p.add_argument('--device', choices=['cpu', 'cuda'], default='cuda')
+    p.add_argument('--train-limit', type=int, default=0)
+    p.add_argument('--val-images', type=int, default=0)
+    a = p.parse_args()
+    config = yaml.safe_load(a.config.read_text())
+    if min(a.trials, a.screen_epochs, a.max_hours) <= 0 or min(a.train_limit, a.val_images) < 0 or not config['training']['warmup_epochs'] < a.screen_epochs <= config['training']['warmup_epochs'] + config['training']['joint_epochs']:
+        p.error('Invalid trial, epoch, time or subset limits.')
+    run(a)
+
 
 if __name__ == '__main__':
     main()

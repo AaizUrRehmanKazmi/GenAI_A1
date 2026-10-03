@@ -47,3 +47,5 @@ Codex implemented the controlled tiny-set corruption diagnostic. It retains the 
 - Codex implemented resumable Task 3 baseline training, fixed validation aggregation/routing summaries, MLflow logging and Kaggle notebook; tested CPU pause/resume equivalence. No full training or Optuna result claimed.
 
 - Codex implemented Task 3 validation comparison and routing visualizations, tests and notebook evaluation cells. Fixed validation only; descriptive example thresholds documented.
+
+- Codex implemented Task 3 Optuna screening and Kaggle notebook with proposed parameter ranges, baseline anchor, equal-budget ranking, atomic resume state and tests. Search outcomes are not yet available.
