@@ -7,7 +7,7 @@ services:
     environment:
       MODEL_DIR: /models
     volumes:
-      - ./exports/models:/models:ro
+      - ${TASK2_MODEL_DIR:-./artifacts/task2-delivery}:/models:ro
     ports:
       - "127.0.0.1:${API_PORT:-8000}:8000"
     healthcheck:

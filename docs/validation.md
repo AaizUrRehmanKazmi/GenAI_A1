@@ -118,3 +118,5 @@ Added a separate corrupted-input diagnostic while keeping baseline and clean-dia
 - Notebook cells parsed and diff whitespace checks passed. Full GPU searches are pending; smoke metrics are not final evidence. Searches use separate folders and provisional winners.
 
 - 2026-10-03: Four selected Task 2 ONNX graphs passed checker and sampled CPU PyTorch/ORT parity; routing identity/mixed dispatch passed. See task2_delivery.md and generated manifest. Three routing-contract tests passed.
+
+- 2026-10-03: Four Task 2 API tests passed, including real ONNX HTTP inference, routing identity, missing models/invalid upload, and hash rejection. Docker not accessed; container verification pending.

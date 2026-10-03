@@ -66,3 +66,29 @@ Full all-tuned validation reference: classifier accuracy 0.98478261, macro F1
 fixed-alpha-0.8 loss 0.05241375. Remaining limitations include clean false
 triggers and degradation of lightly blurred inputs. These are validation results,
 not official test evidence.
+
+## Backend inference
+
+POST /hard-routing accepts a PNG/JPEG multipart `file` and returns image_base64
+(PNG), inference_ms (model execution only), probabilities and selected_expert.
+Output is 128x128. Clean identity preserves preprocessed RGB pixels, not original
+upload resolution or bytes. ONNX sessions load once, validate manifest hashes
+and tensor contracts, and warm up before health reports inference_ready true.
+Missing models yield 503 on inference; /health remains a liveness endpoint.
+Other task endpoints remain placeholders. No PyTorch is required by the backend.
+
+Compose mounts artifacts/task2-delivery read-only; TASK2_MODEL_DIR overrides it.
+Run from the repository root:
+
+```sh
+docker compose up -d --build backend
+curl --fail http://127.0.0.1:8000/health
+curl --fail -F 'file=@data/raw/oxford_pets/images/Abyssinian_1.jpg' http://127.0.0.1:8000/hard-routing -o artifacts/task2-api-response.json
+```
+
+Require inference_ready true. If false, run docker compose logs --tail=80 backend.
+Four local tests passed via `python -m unittest discover -s tests -p test_task2_api.py -v`:
+real ONNX HTTP inference, all routes/clean identity, unavailable models/invalid
+upload, and hash mismatch rejection. Real-model test skips if bundle is missing.
+Tests use httpx ASGI transport and the installed local FastAPI environment.
+Docker build/container execution and frontend upload integration remain unverified.
