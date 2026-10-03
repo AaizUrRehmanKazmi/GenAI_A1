@@ -130,3 +130,13 @@ Added a separate corrupted-input diagnostic while keeping baseline and clean-dia
 - Task 3 Optuna: three objective/config/dimension tests passed and a one-trial CPU diagnostic completed three epochs with warm-up/joint transition. Notebook code cells compile. Full eight-trial GPU search pending.
 
 - Task 3 selected complete ONNX graph: CPU parity passed (image max error 1.85e-6, weights 1.20e-7), batches 1/3/4; three API tests passed with inline thread-offload test adapter. Docker verification pending. See task3_delivery.md.
+
+- Task 4 FS2K preparation: two synthetic tests passed for deterministic style-stratified splitting and official pair mapping/missing-file rejection. Real dataset validation pending download.
+
+- FS2K actual data: 898/898 train and 160/160 validation pairs decoded successfully; shape/range/finiteness and pair dimensions checked. Nine training pairs visually inspected. Two paired-loader tests passed. Official test pixels not decoded.
+
+- Task 4 models: CPU synthetic test covers U-Net RGB128 output, PatchGAN14x14 logits, style-dependent output and nonzero embedding gradients, detached discriminator update and generator backward. No GAN quality claim.
+
+- Task 4 real-pair diagnostic: 20 CPU steps on three training pairs passed finite-gradient and D/G isolation checks; both style embeddings updated. L1 .33268 to .16281 on those pairs only. Preview inspected; no held-out quality claim.
+
+- Task 4 resume test: paused after one complete D+G batch, resumed through two epochs; exact equality with uninterrupted run for both models, both optimizers, progress/history and CPU RNG. Tiny debug subsets only. Notebook cells compile.

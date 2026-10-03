@@ -1,0 +1,962 @@
+[
+  {
+    "image_id": "photo1/image0125",
+    "style": 0,
+    "photo": "photo/photo1/image0125.jpg",
+    "sketch": "sketch/sketch1/sketch0125.jpg"
+  },
+  {
+    "image_id": "photo1/image0141",
+    "style": 0,
+    "photo": "photo/photo1/image0141.jpg",
+    "sketch": "sketch/sketch1/sketch0141.jpg"
+  },
+  {
+    "image_id": "photo1/image0142",
+    "style": 0,
+    "photo": "photo/photo1/image0142.jpg",
+    "sketch": "sketch/sketch1/sketch0142.jpg"
+  },
+  {
+    "image_id": "photo1/image0154",
+    "style": 0,
+    "photo": "photo/photo1/image0154.jpg",
+    "sketch": "sketch/sketch1/sketch0154.jpg"
+  },
+  {
+    "image_id": "photo1/image0162",
+    "style": 0,
+    "photo": "photo/photo1/image0162.jpg",
+    "sketch": "sketch/sketch1/sketch0162.jpg"
+  },
+  {
+    "image_id": "photo1/image0170",
+    "style": 0,
+    "photo": "photo/photo1/image0170.jpg",
+    "sketch": "sketch/sketch1/sketch0170.jpg"
+  },
+  {
+    "image_id": "photo1/image0184",
+    "style": 0,
+    "photo": "photo/photo1/image0184.jpg",
+    "sketch": "sketch/sketch1/sketch0184.jpg"
+  },
+  {
+    "image_id": "photo1/image0190",
+    "style": 0,
+    "photo": "photo/photo1/image0190.jpg",
+    "sketch": "sketch/sketch1/sketch0190.jpg"
+  },
+  {
+    "image_id": "photo1/image0192",
+    "style": 0,
+    "photo": "photo/photo1/image0192.jpg",
+    "sketch": "sketch/sketch1/sketch0192.jpg"
+  },
+  {
+    "image_id": "photo1/image0203",
+    "style": 0,
+    "photo": "photo/photo1/image0203.jpg",
+    "sketch": "sketch/sketch1/sketch0203.jpg"
+  },
+  {
+    "image_id": "photo1/image0207",
+    "style": 0,
+    "photo": "photo/photo1/image0207.jpg",
+    "sketch": "sketch/sketch1/sketch0207.jpg"
+  },
+  {
+    "image_id": "photo1/image0208",
+    "style": 0,
+    "photo": "photo/photo1/image0208.jpg",
+    "sketch": "sketch/sketch1/sketch0208.jpg"
+  },
+  {
+    "image_id": "photo1/image0209",
+    "style": 0,
+    "photo": "photo/photo1/image0209.jpg",
+    "sketch": "sketch/sketch1/sketch0209.jpg"
+  },
+  {
+    "image_id": "photo1/image0212",
+    "style": 0,
+    "photo": "photo/photo1/image0212.jpg",
+    "sketch": "sketch/sketch1/sketch0212.jpg"
+  },
+  {
+    "image_id": "photo1/image0214",
+    "style": 0,
+    "photo": "photo/photo1/image0214.jpg",
+    "sketch": "sketch/sketch1/sketch0214.jpg"
+  },
+  {
+    "image_id": "photo1/image0217",
+    "style": 0,
+    "photo": "photo/photo1/image0217.jpg",
+    "sketch": "sketch/sketch1/sketch0217.jpg"
+  },
+  {
+    "image_id": "photo1/image0218",
+    "style": 0,
+    "photo": "photo/photo1/image0218.jpg",
+    "sketch": "sketch/sketch1/sketch0218.jpg"
+  },
+  {
+    "image_id": "photo1/image0223",
+    "style": 0,
+    "photo": "photo/photo1/image0223.jpg",
+    "sketch": "sketch/sketch1/sketch0223.jpg"
+  },
+  {
+    "image_id": "photo1/image0240",
+    "style": 0,
+    "photo": "photo/photo1/image0240.jpg",
+    "sketch": "sketch/sketch1/sketch0240.jpg"
+  },
+  {
+    "image_id": "photo1/image0241",
+    "style": 0,
+    "photo": "photo/photo1/image0241.jpg",
+    "sketch": "sketch/sketch1/sketch0241.jpg"
+  },
+  {
+    "image_id": "photo1/image0257",
+    "style": 0,
+    "photo": "photo/photo1/image0257.jpg",
+    "sketch": "sketch/sketch1/sketch0257.jpg"
+  },
+  {
+    "image_id": "photo1/image0274",
+    "style": 0,
+    "photo": "photo/photo1/image0274.jpg",
+    "sketch": "sketch/sketch1/sketch0274.jpg"
+  },
+  {
+    "image_id": "photo1/image0283",
+    "style": 0,
+    "photo": "photo/photo1/image0283.jpg",
+    "sketch": "sketch/sketch1/sketch0283.jpg"
+  },
+  {
+    "image_id": "photo1/image0285",
+    "style": 0,
+    "photo": "photo/photo1/image0285.jpg",
+    "sketch": "sketch/sketch1/sketch0285.jpg"
+  },
+  {
+    "image_id": "photo1/image0289",
+    "style": 0,
+    "photo": "photo/photo1/image0289.jpg",
+    "sketch": "sketch/sketch1/sketch0289.jpg"
+  },
+  {
+    "image_id": "photo1/image0298",
+    "style": 0,
+    "photo": "photo/photo1/image0298.jpg",
+    "sketch": "sketch/sketch1/sketch0298.jpg"
+  },
+  {
+    "image_id": "photo1/image0300",
+    "style": 0,
+    "photo": "photo/photo1/image0300.jpg",
+    "sketch": "sketch/sketch1/sketch0300.jpg"
+  },
+  {
+    "image_id": "photo1/image0316",
+    "style": 0,
+    "photo": "photo/photo1/image0316.jpg",
+    "sketch": "sketch/sketch1/sketch0316.jpg"
+  },
+  {
+    "image_id": "photo1/image0317",
+    "style": 0,
+    "photo": "photo/photo1/image0317.jpg",
+    "sketch": "sketch/sketch1/sketch0317.jpg"
+  },
+  {
+    "image_id": "photo1/image0322",
+    "style": 0,
+    "photo": "photo/photo1/image0322.jpg",
+    "sketch": "sketch/sketch1/sketch0322.jpg"
+  },
+  {
+    "image_id": "photo1/image0325",
+    "style": 0,
+    "photo": "photo/photo1/image0325.jpg",
+    "sketch": "sketch/sketch1/sketch0325.jpg"
+  },
+  {
+    "image_id": "photo1/image0329",
+    "style": 0,
+    "photo": "photo/photo1/image0329.jpg",
+    "sketch": "sketch/sketch1/sketch0329.jpg"
+  },
+  {
+    "image_id": "photo1/image0331",
+    "style": 0,
+    "photo": "photo/photo1/image0331.jpg",
+    "sketch": "sketch/sketch1/sketch0331.jpg"
+  },
+  {
+    "image_id": "photo1/image0333",
+    "style": 0,
+    "photo": "photo/photo1/image0333.jpg",
+    "sketch": "sketch/sketch1/sketch0333.jpg"
+  },
+  {
+    "image_id": "photo1/image0340",
+    "style": 0,
+    "photo": "photo/photo1/image0340.jpg",
+    "sketch": "sketch/sketch1/sketch0340.jpg"
+  },
+  {
+    "image_id": "photo1/image0343",
+    "style": 0,
+    "photo": "photo/photo1/image0343.jpg",
+    "sketch": "sketch/sketch1/sketch0343.jpg"
+  },
+  {
+    "image_id": "photo1/image0344",
+    "style": 0,
+    "photo": "photo/photo1/image0344.jpg",
+    "sketch": "sketch/sketch1/sketch0344.jpg"
+  },
+  {
+    "image_id": "photo1/image0346",
+    "style": 0,
+    "photo": "photo/photo1/image0346.jpg",
+    "sketch": "sketch/sketch1/sketch0346.jpg"
+  },
+  {
+    "image_id": "photo1/image0349",
+    "style": 0,
+    "photo": "photo/photo1/image0349.jpg",
+    "sketch": "sketch/sketch1/sketch0349.jpg"
+  },
+  {
+    "image_id": "photo1/image0374",
+    "style": 0,
+    "photo": "photo/photo1/image0374.jpg",
+    "sketch": "sketch/sketch1/sketch0374.jpg"
+  },
+  {
+    "image_id": "photo1/image0378",
+    "style": 0,
+    "photo": "photo/photo1/image0378.jpg",
+    "sketch": "sketch/sketch1/sketch0378.jpg"
+  },
+  {
+    "image_id": "photo1/image0381",
+    "style": 0,
+    "photo": "photo/photo1/image0381.jpg",
+    "sketch": "sketch/sketch1/sketch0381.jpg"
+  },
+  {
+    "image_id": "photo1/image0388",
+    "style": 0,
+    "photo": "photo/photo1/image0388.jpg",
+    "sketch": "sketch/sketch1/sketch0388.jpg"
+  },
+  {
+    "image_id": "photo1/image0398",
+    "style": 0,
+    "photo": "photo/photo1/image0398.jpg",
+    "sketch": "sketch/sketch1/sketch0398.jpg"
+  },
+  {
+    "image_id": "photo1/image0407",
+    "style": 1,
+    "photo": "photo/photo1/image0407.jpg",
+    "sketch": "sketch/sketch1/sketch0407.jpg"
+  },
+  {
+    "image_id": "photo1/image0409",
+    "style": 1,
+    "photo": "photo/photo1/image0409.jpg",
+    "sketch": "sketch/sketch1/sketch0409.jpg"
+  },
+  {
+    "image_id": "photo1/image0417",
+    "style": 1,
+    "photo": "photo/photo1/image0417.jpg",
+    "sketch": "sketch/sketch1/sketch0417.jpg"
+  },
+  {
+    "image_id": "photo1/image0418",
+    "style": 1,
+    "photo": "photo/photo1/image0418.jpg",
+    "sketch": "sketch/sketch1/sketch0418.jpg"
+  },
+  {
+    "image_id": "photo1/image0419",
+    "style": 1,
+    "photo": "photo/photo1/image0419.jpg",
+    "sketch": "sketch/sketch1/sketch0419.jpg"
+  },
+  {
+    "image_id": "photo1/image0420",
+    "style": 1,
+    "photo": "photo/photo1/image0420.jpg",
+    "sketch": "sketch/sketch1/sketch0420.jpg"
+  },
+  {
+    "image_id": "photo1/image0431",
+    "style": 1,
+    "photo": "photo/photo1/image0431.jpg",
+    "sketch": "sketch/sketch1/sketch0431.jpg"
+  },
+  {
+    "image_id": "photo1/image0434",
+    "style": 1,
+    "photo": "photo/photo1/image0434.jpg",
+    "sketch": "sketch/sketch1/sketch0434.jpg"
+  },
+  {
+    "image_id": "photo1/image0446",
+    "style": 1,
+    "photo": "photo/photo1/image0446.jpg",
+    "sketch": "sketch/sketch1/sketch0446.jpg"
+  },
+  {
+    "image_id": "photo1/image0448",
+    "style": 1,
+    "photo": "photo/photo1/image0448.jpg",
+    "sketch": "sketch/sketch1/sketch0448.jpg"
+  },
+  {
+    "image_id": "photo1/image0453",
+    "style": 1,
+    "photo": "photo/photo1/image0453.jpg",
+    "sketch": "sketch/sketch1/sketch0453.jpg"
+  },
+  {
+    "image_id": "photo1/image0458",
+    "style": 1,
+    "photo": "photo/photo1/image0458.jpg",
+    "sketch": "sketch/sketch1/sketch0458.jpg"
+  },
+  {
+    "image_id": "photo1/image0467",
+    "style": 1,
+    "photo": "photo/photo1/image0467.jpg",
+    "sketch": "sketch/sketch1/sketch0467.jpg"
+  },
+  {
+    "image_id": "photo1/image0486",
+    "style": 1,
+    "photo": "photo/photo1/image0486.jpg",
+    "sketch": "sketch/sketch1/sketch0486.jpg"
+  },
+  {
+    "image_id": "photo1/image0498",
+    "style": 1,
+    "photo": "photo/photo1/image0498.jpg",
+    "sketch": "sketch/sketch1/sketch0498.jpg"
+  },
+  {
+    "image_id": "photo1/image0515",
+    "style": 1,
+    "photo": "photo/photo1/image0515.jpg",
+    "sketch": "sketch/sketch1/sketch0515.jpg"
+  },
+  {
+    "image_id": "photo1/image0518",
+    "style": 1,
+    "photo": "photo/photo1/image0518.jpg",
+    "sketch": "sketch/sketch1/sketch0518.jpg"
+  },
+  {
+    "image_id": "photo1/image0526",
+    "style": 1,
+    "photo": "photo/photo1/image0526.jpg",
+    "sketch": "sketch/sketch1/sketch0526.jpg"
+  },
+  {
+    "image_id": "photo1/image0529",
+    "style": 1,
+    "photo": "photo/photo1/image0529.jpg",
+    "sketch": "sketch/sketch1/sketch0529.jpg"
+  },
+  {
+    "image_id": "photo1/image0532",
+    "style": 1,
+    "photo": "photo/photo1/image0532.jpg",
+    "sketch": "sketch/sketch1/sketch0532.jpg"
+  },
+  {
+    "image_id": "photo1/image0534",
+    "style": 1,
+    "photo": "photo/photo1/image0534.jpg",
+    "sketch": "sketch/sketch1/sketch0534.jpg"
+  },
+  {
+    "image_id": "photo1/image0539",
+    "style": 1,
+    "photo": "photo/photo1/image0539.jpg",
+    "sketch": "sketch/sketch1/sketch0539.jpg"
+  },
+  {
+    "image_id": "photo1/image0542",
+    "style": 1,
+    "photo": "photo/photo1/image0542.jpg",
+    "sketch": "sketch/sketch1/sketch0542.jpg"
+  },
+  {
+    "image_id": "photo1/image0558",
+    "style": 1,
+    "photo": "photo/photo1/image0558.jpg",
+    "sketch": "sketch/sketch1/sketch0558.jpg"
+  },
+  {
+    "image_id": "photo1/image0567",
+    "style": 1,
+    "photo": "photo/photo1/image0567.jpg",
+    "sketch": "sketch/sketch1/sketch0567.jpg"
+  },
+  {
+    "image_id": "photo1/image0570",
+    "style": 1,
+    "photo": "photo/photo1/image0570.jpg",
+    "sketch": "sketch/sketch1/sketch0570.jpg"
+  },
+  {
+    "image_id": "photo1/image0571",
+    "style": 1,
+    "photo": "photo/photo1/image0571.jpg",
+    "sketch": "sketch/sketch1/sketch0571.jpg"
+  },
+  {
+    "image_id": "photo1/image0583",
+    "style": 1,
+    "photo": "photo/photo1/image0583.jpg",
+    "sketch": "sketch/sketch1/sketch0583.jpg"
+  },
+  {
+    "image_id": "photo1/image0584",
+    "style": 1,
+    "photo": "photo/photo1/image0584.jpg",
+    "sketch": "sketch/sketch1/sketch0584.jpg"
+  },
+  {
+    "image_id": "photo1/image0585",
+    "style": 1,
+    "photo": "photo/photo1/image0585.jpg",
+    "sketch": "sketch/sketch1/sketch0585.jpg"
+  },
+  {
+    "image_id": "photo1/image0589",
+    "style": 1,
+    "photo": "photo/photo1/image0589.jpg",
+    "sketch": "sketch/sketch1/sketch0589.jpg"
+  },
+  {
+    "image_id": "photo1/image0601",
+    "style": 1,
+    "photo": "photo/photo1/image0601.jpg",
+    "sketch": "sketch/sketch1/sketch0601.jpg"
+  },
+  {
+    "image_id": "photo1/image0610",
+    "style": 1,
+    "photo": "photo/photo1/image0610.jpg",
+    "sketch": "sketch/sketch1/sketch0610.jpg"
+  },
+  {
+    "image_id": "photo1/image0612",
+    "style": 1,
+    "photo": "photo/photo1/image0612.jpg",
+    "sketch": "sketch/sketch1/sketch0612.jpg"
+  },
+  {
+    "image_id": "photo1/image0616",
+    "style": 1,
+    "photo": "photo/photo1/image0616.jpg",
+    "sketch": "sketch/sketch1/sketch0616.jpg"
+  },
+  {
+    "image_id": "photo1/image0620",
+    "style": 1,
+    "photo": "photo/photo1/image0620.jpg",
+    "sketch": "sketch/sketch1/sketch0620.jpg"
+  },
+  {
+    "image_id": "photo1/image0624",
+    "style": 1,
+    "photo": "photo/photo1/image0624.jpg",
+    "sketch": "sketch/sketch1/sketch0624.jpg"
+  },
+  {
+    "image_id": "photo1/image0631",
+    "style": 1,
+    "photo": "photo/photo1/image0631.jpg",
+    "sketch": "sketch/sketch1/sketch0631.jpg"
+  },
+  {
+    "image_id": "photo1/image0635",
+    "style": 1,
+    "photo": "photo/photo1/image0635.jpg",
+    "sketch": "sketch/sketch1/sketch0635.jpg"
+  },
+  {
+    "image_id": "photo1/image0639",
+    "style": 1,
+    "photo": "photo/photo1/image0639.jpg",
+    "sketch": "sketch/sketch1/sketch0639.jpg"
+  },
+  {
+    "image_id": "photo1/image0665",
+    "style": 1,
+    "photo": "photo/photo1/image0665.jpg",
+    "sketch": "sketch/sketch1/sketch0665.jpg"
+  },
+  {
+    "image_id": "photo1/image0683",
+    "style": 1,
+    "photo": "photo/photo1/image0683.jpg",
+    "sketch": "sketch/sketch1/sketch0683.jpg"
+  },
+  {
+    "image_id": "photo1/image0684",
+    "style": 1,
+    "photo": "photo/photo1/image0684.jpg",
+    "sketch": "sketch/sketch1/sketch0684.jpg"
+  },
+  {
+    "image_id": "photo1/image0695",
+    "style": 1,
+    "photo": "photo/photo1/image0695.jpg",
+    "sketch": "sketch/sketch1/sketch0695.jpg"
+  },
+  {
+    "image_id": "photo1/image0696",
+    "style": 1,
+    "photo": "photo/photo1/image0696.jpg",
+    "sketch": "sketch/sketch1/sketch0696.jpg"
+  },
+  {
+    "image_id": "photo1/image0704",
+    "style": 1,
+    "photo": "photo/photo1/image0704.jpg",
+    "sketch": "sketch/sketch1/sketch0704.jpg"
+  },
+  {
+    "image_id": "photo1/image0714",
+    "style": 1,
+    "photo": "photo/photo1/image0714.jpg",
+    "sketch": "sketch/sketch1/sketch0714.jpg"
+  },
+  {
+    "image_id": "photo1/image0724",
+    "style": 1,
+    "photo": "photo/photo1/image0724.jpg",
+    "sketch": "sketch/sketch1/sketch0724.jpg"
+  },
+  {
+    "image_id": "photo1/image0739",
+    "style": 1,
+    "photo": "photo/photo1/image0739.jpg",
+    "sketch": "sketch/sketch1/sketch0739.jpg"
+  },
+  {
+    "image_id": "photo1/image0741",
+    "style": 1,
+    "photo": "photo/photo1/image0741.jpg",
+    "sketch": "sketch/sketch1/sketch0741.jpg"
+  },
+  {
+    "image_id": "photo1/image0743",
+    "style": 1,
+    "photo": "photo/photo1/image0743.jpg",
+    "sketch": "sketch/sketch1/sketch0743.jpg"
+  },
+  {
+    "image_id": "photo1/image0753",
+    "style": 1,
+    "photo": "photo/photo1/image0753.jpg",
+    "sketch": "sketch/sketch1/sketch0753.jpg"
+  },
+  {
+    "image_id": "photo1/image0785",
+    "style": 1,
+    "photo": "photo/photo1/image0785.jpg",
+    "sketch": "sketch/sketch1/sketch0785.jpg"
+  },
+  {
+    "image_id": "photo1/image1316",
+    "style": 0,
+    "photo": "photo/photo1/image1316.jpg",
+    "sketch": "sketch/sketch1/sketch1316.jpg"
+  },
+  {
+    "image_id": "photo1/image1321",
+    "style": 0,
+    "photo": "photo/photo1/image1321.jpg",
+    "sketch": "sketch/sketch1/sketch1321.jpg"
+  },
+  {
+    "image_id": "photo1/image1322",
+    "style": 0,
+    "photo": "photo/photo1/image1322.jpg",
+    "sketch": "sketch/sketch1/sketch1322.jpg"
+  },
+  {
+    "image_id": "photo1/image1327",
+    "style": 0,
+    "photo": "photo/photo1/image1327.jpg",
+    "sketch": "sketch/sketch1/sketch1327.jpg"
+  },
+  {
+    "image_id": "photo1/image1336",
+    "style": 0,
+    "photo": "photo/photo1/image1336.jpg",
+    "sketch": "sketch/sketch1/sketch1336.jpg"
+  },
+  {
+    "image_id": "photo1/image1343",
+    "style": 0,
+    "photo": "photo/photo1/image1343.jpg",
+    "sketch": "sketch/sketch1/sketch1343.jpg"
+  },
+  {
+    "image_id": "photo1/image1374",
+    "style": 0,
+    "photo": "photo/photo1/image1374.jpg",
+    "sketch": "sketch/sketch1/sketch1374.jpg"
+  },
+  {
+    "image_id": "photo1/image1382",
+    "style": 0,
+    "photo": "photo/photo1/image1382.jpg",
+    "sketch": "sketch/sketch1/sketch1382.jpg"
+  },
+  {
+    "image_id": "photo1/image1385",
+    "style": 0,
+    "photo": "photo/photo1/image1385.jpg",
+    "sketch": "sketch/sketch1/sketch1385.jpg"
+  },
+  {
+    "image_id": "photo1/image1390",
+    "style": 0,
+    "photo": "photo/photo1/image1390.jpg",
+    "sketch": "sketch/sketch1/sketch1390.jpg"
+  },
+  {
+    "image_id": "photo2/image0002",
+    "style": 2,
+    "photo": "photo/photo2/image0002.jpg",
+    "sketch": "sketch/sketch2/sketch0002.png"
+  },
+  {
+    "image_id": "photo2/image0005",
+    "style": 2,
+    "photo": "photo/photo2/image0005.jpg",
+    "sketch": "sketch/sketch2/sketch0005.png"
+  },
+  {
+    "image_id": "photo2/image0013",
+    "style": 2,
+    "photo": "photo/photo2/image0013.jpg",
+    "sketch": "sketch/sketch2/sketch0013.png"
+  },
+  {
+    "image_id": "photo2/image0018",
+    "style": 2,
+    "photo": "photo/photo2/image0018.jpg",
+    "sketch": "sketch/sketch2/sketch0018.png"
+  },
+  {
+    "image_id": "photo2/image0025",
+    "style": 2,
+    "photo": "photo/photo2/image0025.jpg",
+    "sketch": "sketch/sketch2/sketch0025.png"
+  },
+  {
+    "image_id": "photo2/image0028",
+    "style": 2,
+    "photo": "photo/photo2/image0028.jpg",
+    "sketch": "sketch/sketch2/sketch0028.png"
+  },
+  {
+    "image_id": "photo2/image0032",
+    "style": 2,
+    "photo": "photo/photo2/image0032.jpg",
+    "sketch": "sketch/sketch2/sketch0032.png"
+  },
+  {
+    "image_id": "photo2/image0038",
+    "style": 2,
+    "photo": "photo/photo2/image0038.jpg",
+    "sketch": "sketch/sketch2/sketch0038.png"
+  },
+  {
+    "image_id": "photo2/image0047",
+    "style": 2,
+    "photo": "photo/photo2/image0047.jpg",
+    "sketch": "sketch/sketch2/sketch0047.png"
+  },
+  {
+    "image_id": "photo2/image0050",
+    "style": 2,
+    "photo": "photo/photo2/image0050.jpg",
+    "sketch": "sketch/sketch2/sketch0050.png"
+  },
+  {
+    "image_id": "photo2/image0052",
+    "style": 2,
+    "photo": "photo/photo2/image0052.jpg",
+    "sketch": "sketch/sketch2/sketch0052.png"
+  },
+  {
+    "image_id": "photo2/image0067",
+    "style": 2,
+    "photo": "photo/photo2/image0067.jpg",
+    "sketch": "sketch/sketch2/sketch0067.png"
+  },
+  {
+    "image_id": "photo2/image0070",
+    "style": 2,
+    "photo": "photo/photo2/image0070.jpg",
+    "sketch": "sketch/sketch2/sketch0070.png"
+  },
+  {
+    "image_id": "photo2/image0081",
+    "style": 2,
+    "photo": "photo/photo2/image0081.jpg",
+    "sketch": "sketch/sketch2/sketch0081.png"
+  },
+  {
+    "image_id": "photo2/image0083",
+    "style": 2,
+    "photo": "photo/photo2/image0083.jpg",
+    "sketch": "sketch/sketch2/sketch0083.png"
+  },
+  {
+    "image_id": "photo2/image0093",
+    "style": 2,
+    "photo": "photo/photo2/image0093.jpg",
+    "sketch": "sketch/sketch2/sketch0093.png"
+  },
+  {
+    "image_id": "photo2/image0098",
+    "style": 2,
+    "photo": "photo/photo2/image0098.jpg",
+    "sketch": "sketch/sketch2/sketch0098.png"
+  },
+  {
+    "image_id": "photo3/image0001",
+    "style": 2,
+    "photo": "photo/photo3/image0001.jpg",
+    "sketch": "sketch/sketch3/sketch0001.jpg"
+  },
+  {
+    "image_id": "photo3/image0002",
+    "style": 2,
+    "photo": "photo/photo3/image0002.jpg",
+    "sketch": "sketch/sketch3/sketch0002.jpg"
+  },
+  {
+    "image_id": "photo3/image0010",
+    "style": 2,
+    "photo": "photo/photo3/image0010.jpg",
+    "sketch": "sketch/sketch3/sketch0010.jpg"
+  },
+  {
+    "image_id": "photo3/image0013",
+    "style": 2,
+    "photo": "photo/photo3/image0013.jpg",
+    "sketch": "sketch/sketch3/sketch0013.jpg"
+  },
+  {
+    "image_id": "photo3/image0017",
+    "style": 2,
+    "photo": "photo/photo3/image0017.jpg",
+    "sketch": "sketch/sketch3/sketch0017.jpg"
+  },
+  {
+    "image_id": "photo3/image0020",
+    "style": 2,
+    "photo": "photo/photo3/image0020.jpg",
+    "sketch": "sketch/sketch3/sketch0020.jpg"
+  },
+  {
+    "image_id": "photo3/image0022",
+    "style": 2,
+    "photo": "photo/photo3/image0022.jpg",
+    "sketch": "sketch/sketch3/sketch0022.jpg"
+  },
+  {
+    "image_id": "photo3/image0030",
+    "style": 2,
+    "photo": "photo/photo3/image0030.jpg",
+    "sketch": "sketch/sketch3/sketch0030.jpg"
+  },
+  {
+    "image_id": "photo3/image0032",
+    "style": 2,
+    "photo": "photo/photo3/image0032.jpg",
+    "sketch": "sketch/sketch3/sketch0032.jpg"
+  },
+  {
+    "image_id": "photo3/image0062",
+    "style": 2,
+    "photo": "photo/photo3/image0062.jpg",
+    "sketch": "sketch/sketch3/sketch0062.jpg"
+  },
+  {
+    "image_id": "photo3/image0065",
+    "style": 2,
+    "photo": "photo/photo3/image0065.jpg",
+    "sketch": "sketch/sketch3/sketch0065.jpg"
+  },
+  {
+    "image_id": "photo3/image0067",
+    "style": 2,
+    "photo": "photo/photo3/image0067.jpg",
+    "sketch": "sketch/sketch3/sketch0067.jpg"
+  },
+  {
+    "image_id": "photo3/image0073",
+    "style": 2,
+    "photo": "photo/photo3/image0073.jpg",
+    "sketch": "sketch/sketch3/sketch0073.jpg"
+  },
+  {
+    "image_id": "photo3/image0076",
+    "style": 2,
+    "photo": "photo/photo3/image0076.jpg",
+    "sketch": "sketch/sketch3/sketch0076.jpg"
+  },
+  {
+    "image_id": "photo3/image0087",
+    "style": 2,
+    "photo": "photo/photo3/image0087.jpg",
+    "sketch": "sketch/sketch3/sketch0087.jpg"
+  },
+  {
+    "image_id": "photo3/image0102",
+    "style": 2,
+    "photo": "photo/photo3/image0102.jpg",
+    "sketch": "sketch/sketch3/sketch0102.jpg"
+  },
+  {
+    "image_id": "photo3/image0105",
+    "style": 2,
+    "photo": "photo/photo3/image0105.jpg",
+    "sketch": "sketch/sketch3/sketch0105.jpg"
+  },
+  {
+    "image_id": "photo3/image0112",
+    "style": 2,
+    "photo": "photo/photo3/image0112.jpg",
+    "sketch": "sketch/sketch3/sketch0112.jpg"
+  },
+  {
+    "image_id": "photo3/image0114",
+    "style": 2,
+    "photo": "photo/photo3/image0114.jpg",
+    "sketch": "sketch/sketch3/sketch0114.jpg"
+  },
+  {
+    "image_id": "photo3/image0117",
+    "style": 2,
+    "photo": "photo/photo3/image0117.jpg",
+    "sketch": "sketch/sketch3/sketch0117.jpg"
+  },
+  {
+    "image_id": "photo3/image0133",
+    "style": 2,
+    "photo": "photo/photo3/image0133.jpg",
+    "sketch": "sketch/sketch3/sketch0133.jpg"
+  },
+  {
+    "image_id": "photo3/image0138",
+    "style": 2,
+    "photo": "photo/photo3/image0138.jpg",
+    "sketch": "sketch/sketch3/sketch0138.jpg"
+  },
+  {
+    "image_id": "photo3/image0148",
+    "style": 2,
+    "photo": "photo/photo3/image0148.jpg",
+    "sketch": "sketch/sketch3/sketch0148.jpg"
+  },
+  {
+    "image_id": "photo3/image0166",
+    "style": 2,
+    "photo": "photo/photo3/image0166.jpg",
+    "sketch": "sketch/sketch3/sketch0166.jpg"
+  },
+  {
+    "image_id": "photo3/image0194",
+    "style": 2,
+    "photo": "photo/photo3/image0194.jpg",
+    "sketch": "sketch/sketch3/sketch0194.jpg"
+  },
+  {
+    "image_id": "photo3/image0199",
+    "style": 2,
+    "photo": "photo/photo3/image0199.jpg",
+    "sketch": "sketch/sketch3/sketch0199.jpg"
+  },
+  {
+    "image_id": "photo3/image0362",
+    "style": 2,
+    "photo": "photo/photo3/image0362.jpg",
+    "sketch": "sketch/sketch3/sketch0362.jpg"
+  },
+  {
+    "image_id": "photo3/image0371",
+    "style": 2,
+    "photo": "photo/photo3/image0371.jpg",
+    "sketch": "sketch/sketch3/sketch0371.jpg"
+  },
+  {
+    "image_id": "photo3/image0376",
+    "style": 2,
+    "photo": "photo/photo3/image0376.jpg",
+    "sketch": "sketch/sketch3/sketch0376.jpg"
+  },
+  {
+    "image_id": "photo3/image0378",
+    "style": 2,
+    "photo": "photo/photo3/image0378.jpg",
+    "sketch": "sketch/sketch3/sketch0378.jpg"
+  },
+  {
+    "image_id": "photo3/image0385",
+    "style": 2,
+    "photo": "photo/photo3/image0385.jpg",
+    "sketch": "sketch/sketch3/sketch0385.jpg"
+  },
+  {
+    "image_id": "photo3/image0398",
+    "style": 2,
+    "photo": "photo/photo3/image0398.jpg",
+    "sketch": "sketch/sketch3/sketch0398.jpg"
+  },
+  {
+    "image_id": "photo3/image0418",
+    "style": 2,
+    "photo": "photo/photo3/image0418.jpg",
+    "sketch": "sketch/sketch3/sketch0418.jpg"
+  },
+  {
+    "image_id": "photo3/image0427",
+    "style": 2,
+    "photo": "photo/photo3/image0427.jpg",
+    "sketch": "sketch/sketch3/sketch0427.jpg"
+  },
+  {
+    "image_id": "photo3/image0438",
+    "style": 2,
+    "photo": "photo/photo3/image0438.jpg",
+    "sketch": "sketch/sketch3/sketch0438.jpg"
+  },
+  {
+    "image_id": "photo3/image0467",
+    "style": 2,
+    "photo": "photo/photo3/image0467.jpg",
+    "sketch": "sketch/sketch3/sketch0467.jpg"
+  }
+]

@@ -51,3 +51,13 @@ Codex implemented the controlled tiny-set corruption diagnostic. It retains the 
 - Codex implemented Task 3 Optuna screening and Kaggle notebook with proposed parameter ranges, baseline anchor, equal-budget ranking, atomic resume state and tests. Search outcomes are not yet available.
 
 - Codex packaged selected Task 3 checkpoint, exported full mixture graph, verified numerical parity and implemented ONNX-only /soft-mixture service plus tests. Docker and frontend checks remain pending.
+
+- Codex consulted the official FS2K README and split script, implemented annotation-based pair preparation and seed42 validation split, and tested with synthetic entries. No real FS2K training performed.
+
+- Codex implemented FS2K paired tensor loader and shared horizontal flip, ran train/validation decoding checks, and inspected training-pair preview. GAN implementation pending.
+
+- Codex implemented provisional style-conditioned U-Net/PatchGAN and BCE+L1 objectives, with learned embeddings in both networks and CPU model tests. Architecture choices documented; training and tuning pending.
+
+- Codex added and executed real-pair GAN diagnostic with separate loss logging, gradient isolation assertions and preview. Full training pending.
+
+- Codex implemented resumable dual-optimizer Task 4 trainer, validation/preview logging and Kaggle five-epoch baseline workflow. Initial hyperparameters are provisional; full GPU training and tuning pending.

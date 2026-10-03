@@ -1,15 +1,17 @@
-# Requirements are fixed; null values require research and validation.
 task: 4
 seed: 42
-image_size: [128, 128]
-dataset: fs2k
-validation_fraction: 0.15
-model: null
-training: null
-loss: null
-optuna:
-  search_space: null
-  objective: null
-  trials: null
-tracking:
-  provider: null # Choose MLflow or W&B and document why.
+generator:
+  base_channels: 32
+  style_dim: 8
+  dropout: 0.2
+discriminator:
+  base_channels: 32
+  style_dim: 8
+training:
+  epochs: 30
+  batch_size: 8
+  generator_lr: 0.0002
+  discriminator_lr: 0.0002
+loss:
+  l1_weight: 100.0
+# Provisional baseline; inspect early previews before committing the full budget.

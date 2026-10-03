@@ -1,0 +1,36 @@
+{
+  "seed": 42,
+  "validation_fraction": 0.15,
+  "rounding": "nearest integer per style, halves up",
+  "style_labels": "official0/1/2 map to UI Style1/2/3",
+  "annotation_sha256": {
+    "anno_train.json": "f1f82ca696fbcc23ec014f5cc9a63985ee1415330a78c2f07f9f61f0a7633ab5",
+    "anno_test.json": "c7311a791dc6f3829063ab069abe3e23a5e49df2bb8cdbff13428147cca68749"
+  },
+  "counts": {
+    "train": {
+      "total": 898,
+      "by_style": {
+        "0": 303,
+        "1": 297,
+        "2": 298
+      }
+    },
+    "val": {
+      "total": 160,
+      "by_style": {
+        "0": 54,
+        "1": 53,
+        "2": 53
+      }
+    },
+    "test": {
+      "total": 1046,
+      "by_style": {
+        "1": 381,
+        "0": 619,
+        "2": 46
+      }
+    }
+  }
+}
