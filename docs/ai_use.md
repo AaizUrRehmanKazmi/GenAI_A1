@@ -45,3 +45,5 @@ Codex implemented the controlled tiny-set corruption diagnostic. It retains the 
 - Codex implemented Task 3 stage-1 model, loss, balanced restoration batch helper, tests and diagnostic using assignment-specified mixture/loss formulas. Training schedule remains provisional; full trainer and optimization pending.
 
 - Codex implemented resumable Task 3 baseline training, fixed validation aggregation/routing summaries, MLflow logging and Kaggle notebook; tested CPU pause/resume equivalence. No full training or Optuna result claimed.
+
+- Codex implemented Task 3 validation comparison and routing visualizations, tests and notebook evaluation cells. Fixed validation only; descriptive example thresholds documented.

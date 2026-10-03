@@ -124,3 +124,5 @@ Added a separate corrupted-input diagnostic while keeping baseline and clean-dia
 - Task 3 stage 1: three SoftMoE model tests and actual selected-checkpoint two-step diagnostic passed. Expert freezing/unfreezing and gate gradients verified. One training image only; no Task 3 validation claims.
 
 - Task 3 trainer: tiny CPU paused/resumed run exactly matched uninterrupted model tensors, progress/history and RNG through two warm-up epochs and one joint epoch. Notebook cells compile. CUDA and full-split training pending.
+
+- Task 3 detailed evaluator: 3 aggregation/selection tests passed; real epoch-10 checkpoint smoke evaluation passed on 40 validation cases; routing heatmap inspected and notebook cells compile. Full CPU run was stopped after progress at 408/7360 because of runtime cost; no full-set evaluation report claimed. Run full evaluation on Kaggle GPU.
