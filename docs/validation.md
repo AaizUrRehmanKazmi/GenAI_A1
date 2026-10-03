@@ -128,3 +128,5 @@ Added a separate corrupted-input diagnostic while keeping baseline and clean-dia
 - Task 3 detailed evaluator: 3 aggregation/selection tests passed; real epoch-10 checkpoint smoke evaluation passed on 40 validation cases; routing heatmap inspected and notebook cells compile. Full CPU run was stopped after progress at 408/7360 because of runtime cost; no full-set evaluation report claimed. Run full evaluation on Kaggle GPU.
 
 - Task 3 Optuna: three objective/config/dimension tests passed and a one-trial CPU diagnostic completed three epochs with warm-up/joint transition. Notebook code cells compile. Full eight-trial GPU search pending.
+
+- Task 3 selected complete ONNX graph: CPU parity passed (image max error 1.85e-6, weights 1.20e-7), batches 1/3/4; three API tests passed with inline thread-offload test adapter. Docker verification pending. See task3_delivery.md.

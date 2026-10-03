@@ -6,8 +6,10 @@ services:
       dockerfile: backend/Dockerfile
     environment:
       MODEL_DIR: /models
+      TASK3_MODEL_DIR: /models-task3
     volumes:
       - ${TASK2_MODEL_DIR:-./artifacts/task2-delivery}:/models:ro
+      - ${TASK3_BUNDLE_DIR:-./artifacts/task3-delivery}:/models-task3:ro
     ports:
       - "127.0.0.1:${API_PORT:-8000}:8000"
     healthcheck:

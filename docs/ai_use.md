@@ -49,3 +49,5 @@ Codex implemented the controlled tiny-set corruption diagnostic. It retains the 
 - Codex implemented Task 3 validation comparison and routing visualizations, tests and notebook evaluation cells. Fixed validation only; descriptive example thresholds documented.
 
 - Codex implemented Task 3 Optuna screening and Kaggle notebook with proposed parameter ranges, baseline anchor, equal-budget ranking, atomic resume state and tests. Search outcomes are not yet available.
+
+- Codex packaged selected Task 3 checkpoint, exported full mixture graph, verified numerical parity and implemented ONNX-only /soft-mixture service plus tests. Docker and frontend checks remain pending.
