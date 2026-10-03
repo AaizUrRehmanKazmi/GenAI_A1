@@ -1,15 +1,20 @@
-# Requirements are fixed; null values require research and validation.
 task: 3
 seed: 42
 image_size: [128, 128]
 dataset: oxford_iiit_pet
-validation_fraction: 0.2
-model: null
-training: null
-loss: null
-optuna:
-  search_space: null
-  objective: null
-  trials: null
+model:
+  temperature: 1.0
+training:
+  warmup_epochs: 2
+  joint_epochs: 8
+  batch_size: 8
+  warmup_learning_rate: 0.0001
+  joint_learning_rate: 0.00002
+loss:
+  l1_weight: 0.8
+  ssim_weight: 0.2
+  classification_weight: 0.1
+  balance_weight: 0.01
 tracking:
-  provider: null # Choose MLflow or W&B and document why.
+  provider: mlflow
+# Provisional baseline; Optuna tuning is still pending.

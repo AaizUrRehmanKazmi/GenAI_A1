@@ -120,3 +120,7 @@ Added a separate corrupted-input diagnostic while keeping baseline and clean-dia
 - 2026-10-03: Four selected Task 2 ONNX graphs passed checker and sampled CPU PyTorch/ORT parity; routing identity/mixed dispatch passed. See task2_delivery.md and generated manifest. Three routing-contract tests passed.
 
 - 2026-10-03: Four Task 2 API tests passed, including real ONNX HTTP inference, routing identity, missing models/invalid upload, and hash rejection. Docker not accessed; container verification pending.
+
+- Task 3 stage 1: three SoftMoE model tests and actual selected-checkpoint two-step diagnostic passed. Expert freezing/unfreezing and gate gradients verified. One training image only; no Task 3 validation claims.
+
+- Task 3 trainer: tiny CPU paused/resumed run exactly matched uninterrupted model tensors, progress/history and RNG through two warm-up epochs and one joint epoch. Notebook cells compile. CUDA and full-split training pending.
