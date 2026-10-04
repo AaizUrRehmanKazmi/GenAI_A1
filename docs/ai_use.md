@@ -65,3 +65,7 @@ Codex implemented the controlled tiny-set corruption diagnostic. It retains the 
 - Added and ran CPU Task 4 best-checkpoint diagnostics on all train/validation pairs and same-photo style probes; recorded limitations in task4_diagnostic.md. No training source or saved configuration changed.
 
 - Implemented resumable Task 4 Optuna screening and Kaggle notebook, including independent GAN learning rates and required architecture/loss parameters. Fixed validation objective, source/data fingerprint checks, and full fresh-retraining instructions added. CPU debug runs are not final evidence.
+
+- Evaluated selected Task 4 epoch 19 locally on complete train/validation splits; generated same-photo three-style previews and documented remaining artifacts without attributing an unverified cause.
+
+- Added a matched Task 4 L1-only versus GAN+L1 fixed-12-training-pair diagnostic, with identical generator initialization, disabled dropout/augmentation, and preserved baseline training source. Debug-only results must not be reported as validation performance.

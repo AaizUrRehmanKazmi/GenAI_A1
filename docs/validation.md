@@ -142,3 +142,5 @@ Added a separate corrupted-input diagnostic while keeping baseline and clean-dia
 - Task 4 resume test: paused after one complete D+G batch, resumed through two epochs; exact equality with uninterrupted run for both models, both optimizers, progress/history and CPU RNG. Tiny debug subsets only. Notebook cells compile.
 
 Task 4 search: config/objective unit tests pass; CPU debug screening creates study, leaderboard, selected config and checkpoints. Full GPU search remains to be run. See docs/task4_optuna.md.
+
+Task 4 selected epoch 19: CPU full train/validation re-evaluation reproduced saved validation metrics (L1 0.10518875, SSIM 0.50645363). See task4_selected_validation.md; visual limitations remain and official test was untouched.
