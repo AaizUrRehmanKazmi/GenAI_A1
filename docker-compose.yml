@@ -5,11 +5,15 @@ services:
       context: .
       dockerfile: backend/Dockerfile
     environment:
+      TASK1_MODEL_DIR: /models-task1
       MODEL_DIR: /models
       TASK3_MODEL_DIR: /models-task3
+      TASK4_MODEL_DIR: /models-task4
     volumes:
+      - ${TASK1_BUNDLE_DIR:-./artifacts/task1-export}:/models-task1:ro
       - ${TASK2_MODEL_DIR:-./artifacts/task2-delivery}:/models:ro
       - ${TASK3_BUNDLE_DIR:-./artifacts/task3-delivery}:/models-task3:ro
+      - ${TASK4_BUNDLE_DIR:-./artifacts/task4-delivery}:/models-task4:ro
     ports:
       - "127.0.0.1:${API_PORT:-8000}:8000"
     healthcheck:

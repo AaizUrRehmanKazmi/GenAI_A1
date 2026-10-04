@@ -156,3 +156,5 @@ Task 4 fine-tuning: both control and GAN CPU debug runs initialized from selecte
 Task4 sketch-gradient ablation: three loss tests passed; real-checkpoint CPU debug two-epoch resumed/uninterrupted generator, optimizer, progress/history and RNG matched exactly. Discriminator optimizer unused. Notebook compiled; full GPU comparison pending.
 
 Fixed12 candidate diagnostic: CPU real-pair two-step resumed and uninterrupted model, optimizer, RNG and history matched exactly; notebook cells compile. Longer GPU fit remains pending.
+
+Reconstruction epoch14 full eval: train898 L1 .08013179 SSIM .56682378; val160 L1 .08853802 SSIM .55807106. Blurred training examples confirm poor fitting is not restricted to held-out images; no causal claim about dropout. See task4_reconstruction_fit_review.md.

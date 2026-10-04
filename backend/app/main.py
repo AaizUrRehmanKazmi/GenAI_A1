@@ -1,7 +1,9 @@
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from .preprocessing import validate_image
+from .task1_runtime import UniversalRestorationService
 from .task2_runtime import HardRoutingService
 from .task3_runtime import SoftMixtureService
+from .task4_runtime import SketchService
 from .schemas import InferenceResult
 from contextlib import asynccontextmanager
 import logging
@@ -10,6 +12,11 @@ from starlette.concurrency import run_in_threadpool
 
 @asynccontextmanager
 async def lifespan(app):
+    app.state.universal = None
+    try:
+        app.state.universal = UniversalRestorationService(os.getenv('TASK1_MODEL_DIR', '/models-task1'))
+    except Exception:
+        logging.exception('Task 1 model initialization failed')
     app.state.hard_router = None
     try:
         app.state.hard_router = HardRoutingService(os.getenv('MODEL_DIR', '/models'))
@@ -20,24 +27,32 @@ async def lifespan(app):
         app.state.soft_mixture = SoftMixtureService(os.getenv('TASK3_MODEL_DIR', '/models-task3'))
     except Exception:
         logging.exception('Task 3 model initialization failed')
+    app.state.sketch = None
+    try:
+        app.state.sketch = SketchService(os.getenv("TASK4_MODEL_DIR", "/models-task4"))
+    except Exception:
+        logging.exception("Task 4 model initialization failed")
     yield
 
 
-app = FastAPI(title="GenAI Assignment", version="0.2.0", lifespan=lifespan)
+app = FastAPI(title="GenAI Assignment", version="0.3.0", lifespan=lifespan)
 
 @app.get("/health")
 async def health():
-    return {"status": "ok", "inference_ready": app.state.hard_router is not None,
-            "tasks": {"hard-routing": app.state.hard_router is not None,
-                      "soft-mixture": app.state.soft_mixture is not None}}
-
-async def pending(file: UploadFile):
-    await validate_image(file)
-    raise HTTPException(503, detail="Inference is not implemented. Complete the research, training and ONNX integration steps first.")
+    return {"status": "ok",
+            "inference_ready": all([app.state.universal, app.state.hard_router,
+                                    app.state.soft_mixture, app.state.sketch]),
+            "tasks": {"universal-restoration": app.state.universal is not None,
+                      "hard-routing": app.state.hard_router is not None,
+                      "soft-mixture": app.state.soft_mixture is not None,
+                      "face-to-sketch": app.state.sketch is not None}}
 
 @app.post("/universal-restoration")
 async def universal(file: UploadFile = File(...)):
-    return await pending(file)
+    payload = await validate_image(file)
+    if app.state.universal is None:
+        raise HTTPException(503, 'Task 1 model is unavailable. Check the mounted model bundle.')
+    return await run_in_threadpool(app.state.universal.predict, payload)
 
 @app.post("/hard-routing", response_model=InferenceResult)
 async def hard(file: UploadFile = File(...)):
@@ -55,4 +70,7 @@ async def soft(file: UploadFile = File(...)):
 
 @app.post("/face-to-sketch")
 async def sketch(file: UploadFile = File(...), style: int = Form(..., ge=1, le=3)):
-    return await pending(file)
+    payload = await validate_image(file)
+    if app.state.sketch is None:
+        raise HTTPException(503, 'Task 4 model unavailable. Check model bundle.')
+    return await run_in_threadpool(app.state.sketch.predict, payload, style)

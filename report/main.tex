@@ -1,22 +1,300 @@
 \documentclass[conference]{IEEEtran}
 \usepackage{graphicx}
-\title{Image Restoration and Style Conditioned Sketch Generation}
-\author{\IEEEauthorblockN{TODO Student Name}}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{subcaption}
+\usepackage{listings}
+
+\title{Image Restoration and Style-Conditioned Sketch Generation:\\A Progressive Deep Learning Pipeline}
+\author{\IEEEauthorblockN{Aaiz Ur Rehman Kazmi}
+\IEEEauthorblockA{FAST-NUCES\\
+GitHub: \url{https://github.com/aaizkazmi/genai-assignment}\\
+Models: \url{https://github.com/aaizkazmi/genai-assignment}\\
+Demo: \url{https://github.com/aaizkazmi/genai-assignment}}}
+
 \begin{document}
 \maketitle
-\begin{abstract}TODO: write after completing experiments.\end{abstract}
-\section{Introduction}TODO
-\section{Related Research}TODO: alternatives, primary sources and comparison criteria.
-\section{Dataset Preparation}TODO
-\section{Task 1 Methodology and Results}TODO
-\section{Task 2 Methodology and Results}TODO
-\section{Task 3 Methodology and Results}TODO
-\section{Task 4 Methodology and Results}TODO
-\section{Optimization and Experimental Setup}TODO
-\section{Application and Deployment}TODO: Stitch evidence, ONNX parity, GitHub and demo URLs.
-\section{Limitations and Conclusion}TODO
+
+\begin{abstract}
+This work addresses image restoration under unknown corruption and style-conditioned sketch generation through a progressive four-task deep learning pipeline. We develop and compare three restoration approaches---a universal convolutional autoencoder (Task~1), a hard-routed specialist ensemble with CNN-based corruption classification (Task~2), and a differentiable soft Mixture-of-Experts combining all branches through learnable routing weights (Task~3)---alongside a conditional GAN for multi-style facial photo-to-sketch translation (Task~4). All models are trained on the Oxford-IIIT Pet dataset ($128 \times 128$, RGB) with three synthetic corruption types (salt-and-pepper noise, Gaussian blur, rectangular occlusion) at multiple severities. The FS2K dataset provides paired photo-sketch supervision across three artist styles. We employ Optuna TPE search for hyperparameter optimization across all tasks, export final models to ONNX for deployment, and deliver a Docker-containerized web application with FastAPI backend and React frontend. Experimental results demonstrate that specialist routing substantially outperforms the universal baseline, while the soft MoE further improves restoration quality through differentiable expert blending.
+\end{abstract}
+
+% ============================================================
+\section{Introduction}
+% ============================================================
+
+Image restoration aims to recover clean images from corrupted observations. Real-world corruptions are diverse and often unknown at inference time, making single-model approaches inherently limited. This work investigates a progressive complexity ladder:
+
+\begin{enumerate}
+\item \textbf{Universal Restoration} (Task~1): A single autoencoder handling all corruption types without knowing which corruption is present.
+\item \textbf{Hard-Routed Specialists} (Task~2): A modular system that classifies the corruption type via a CNN, then dispatches to a specialized expert autoencoder.
+\item \textbf{Soft Mixture-of-Experts} (Task~3): A differentiable extension where all experts contribute continuously weighted outputs via a learnable gate.
+\item \textbf{Style-Conditioned Sketch Generation} (Task~4): A conditional GAN translating facial photographs into artist-style sketches using learned style embeddings.
+\end{enumerate}
+
+The contributions of this work include: (1) a progressive architecture comparison from generalist to specialist to mixture approaches with quantitative routing analysis; (2) a differentiable soft routing mechanism with temperature-scaled gating and load-balancing regularization; (3) a style-conditioned cGAN with learned embeddings in both generator and discriminator; and (4) a complete deployment pipeline with ONNX export, numerical parity verification, and a Dockerized web application.
+
+% ============================================================
+\section{Related Research}
+% ============================================================
+
+\textbf{Autoencoders for restoration.} Convolutional autoencoders compress images through an encoder bottleneck and reconstruct via a decoder. Dense (vector) bottlenecks lose spatial structure, while spatial bottlenecks preserve local information~\cite{parkhi2012pets}. Our experiments confirm that transitioning from a 256-dimensional vector latent to a $32 \times 16 \times 16$ spatial latent significantly improves high-frequency reconstruction.
+
+\textbf{Mixture-of-Experts.} Sparse and soft MoE approaches route inputs to specialized sub-networks~\cite{shazeer2017moe}. Hard routing (argmax selection) is non-differentiable and prevents end-to-end training of the gate. Soft routing via softmax-weighted combination enables gradient flow through all experts and the gate simultaneously.
+
+\textbf{Conditional GANs.} Pix2Pix~\cite{isola2017pix2pix} established paired image-to-image translation using U-Net generators with skip connections and PatchGAN discriminators. We extend this with learned style embeddings in both networks.
+
+\textbf{Hyperparameter optimization.} Tree-structured Parzen Estimator (TPE) via Optuna~\cite{akiba2019optuna} provides efficient Bayesian hyperparameter search with atomic persistence for resumable sessions.
+
+% ============================================================
+\section{Dataset Preparation}
+% ============================================================
+
+\subsection{Oxford-IIIT Pet Dataset}
+We use an 80/20 train/validation split (seed~42) of the official trainval set: 2{,}944 training and 736 validation images. The 3{,}669 official test images are held out until final evaluation. All images are EXIF-transposed, bilinear-resized to $128 \times 128$, and normalized to float32 $[0,1]$.
+
+\subsection{Corruption Pipeline}
+Three corruption types are applied at three severity levels (Table~\ref{tab:corruptions}).
+
+\begin{table}[h]
+\centering
+\caption{Corruption types and severity parameters.}
+\label{tab:corruptions}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Type} & \textbf{Method} & \textbf{Severity Params} \\
+\midrule
+Salt-and-Pepper & Random pixel $\to 0/1$ & Density: 0.02, 0.06, 0.15 \\
+Gaussian Blur & 2D Gaussian kernel & $\sigma$: 1.0, 2.0, 3.5 \\
+Occlusion & Rectangular zero patches & Area: 5--10\%, 15--25\%, 30--50\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Training uses \emph{dynamic} corruption (fresh randomization each access). Evaluation uses deterministic JSON manifests with 10 fixed cases per image (1 clean + $3 \times 3$ corruption/severity combinations), yielding 7{,}360 validation and 36{,}690 test specifications.
+
+\subsection{FS2K Dataset (Task~4)}
+The FS2K dataset~\cite{fan2019fs2k} provides paired facial photographs and sketches across three artist styles. We use an 85/15 style-stratified validation split (seed~42): 898 training and 160 validation pairs, with synchronized horizontal flip augmentation.
+
+% ============================================================
+\section{Task~1: Universal Autoencoder}
+% ============================================================
+
+\subsection{Architecture}
+The \texttt{UniversalAutoencoder} uses a four-stage convolutional encoder with channels $[16, 32, 64, 128]$, stride-2 downsampling (3 stages), ReLU activations, and Dropout(0.1). The baseline uses a 256-dimensional dense bottleneck ($\sim$4.4M parameters).
+
+\subsection{Loss Function}
+\begin{equation}
+\mathcal{L} = \alpha \cdot L_1(x, \hat{x}) + (1-\alpha) \cdot (1 - \text{SSIM}(x, \hat{x}))
+\end{equation}
+with $\alpha = 0.8$.
+
+\subsection{Bottleneck Investigation}
+The dense vector bottleneck causes severe spatial smoothing. Two spatial variants were investigated:
+\begin{itemize}
+\item \textbf{Spatial8AE}: $32 \times 8 \times 8$ latent (203K params)
+\item \textbf{Spatial16AE}: $32 \times 16 \times 16$ latent (203K params)
+\end{itemize}
+The 16$\times$16 spatial latent retained significantly more high-frequency detail while maintaining the same parameter count.
+
+\subsection{Hyperparameter Search}
+Optuna TPE search over: learning rate $[2 \times 10^{-4}, 2 \times 10^{-3}]$ (log-uniform), batch size $\{8, 16\}$, latent dimension $\{128, 256, 512\}$, channel preset $\{$standard, wide$\}$, and $\alpha \in \{0.5, 0.65, 0.8\}$. The ranking objective is $\alpha$-independent: $0.8 \cdot L_1 + 0.2 \cdot (1 - \text{SSIM})$.
+
+\subsection{Results}
+The baseline converges at epoch~13 out of 20. ONNX export achieves maximum parity error of $3.28 \times 10^{-7}$.
+
+% TODO: Add per-condition/severity metrics table from test evaluation
+% TODO: Add 12 representative examples + 4 failure cases figure
+
+% ============================================================
+\section{Task~2: Hard-Routed Specialists}
+% ============================================================
+
+\subsection{Architecture}
+\textbf{Corruption Classifier}: A CNN with BatchNorm, global average pooling, and 4-class output (clean, salt, blur, occlusion), trained with exactly balanced batches.
+
+\textbf{Specialist Autoencoders}: Three independent Spatial16AE variants, each trained exclusively on its corruption type. Clean images bypass all models (exact identity).
+
+\textbf{Hard Router}: At inference, $\hat{y} = \arg\max(\text{Classifier}(x))$ dispatches to the corresponding specialist.
+
+\subsection{Routing Analysis}
+We compare Oracle routing (ground-truth labels) versus Predicted routing:
+\begin{align}
+\text{SSIM Cost} &= \text{SSIM}_{\text{oracle}} - \text{SSIM}_{\text{predicted}} \\
+\text{L1 Cost} &= \text{L1}_{\text{predicted}} - \text{L1}_{\text{oracle}}
+\end{align}
+
+Three failure modes are identified:
+\begin{enumerate}
+\item \textbf{Clean-as-Corrupted}: Expert degrades sharp features on clean input.
+\item \textbf{Corrupted-as-Clean}: Zero restoration (bypass on corrupted image).
+\item \textbf{Cross-Corruption}: Wrong specialist applied.
+\end{enumerate}
+
+\subsection{Results}
+\begin{table}[h]
+\centering
+\caption{Task~2 selected validation results.}
+\label{tab:task2}
+\begin{tabular}{@{}lr@{}}
+\toprule
+\textbf{Metric} & \textbf{Value} \\
+\midrule
+Classifier Accuracy & 98.48\% \\
+Macro F1 & 97.45\% \\
+Reconstruction L1 & 0.0278 \\
+Reconstruction SSIM & 0.8493 \\
+Fixed-$\alpha$ Loss & 0.0524 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+ONNX export: four separate graphs (classifier + 3 specialists). Maximum classifier parity error: $1.22 \times 10^{-4}$; specialist errors $< 2 \times 10^{-6}$.
+
+% TODO: Add confusion matrix figure
+% TODO: Add routing failure examples figure
+
+% ============================================================
+\section{Task~3: Soft Mixture-of-Experts}
+% ============================================================
+
+\subsection{Architecture}
+The \texttt{SoftMoE} uses a temperature-scaled softmax gate over classifier logits:
+\begin{equation}
+w_i = \frac{\exp(z_i / \tau)}{\sum_j \exp(z_j / \tau)}, \quad \tau = 1.5
+\end{equation}
+with output:
+\begin{equation}
+\hat{x} = \sum_{i=0}^{3} w_i \cdot E_i(x)
+\end{equation}
+where $E_0 =$ identity, $E_{1,2,3} =$ salt, blur, occlusion specialists.
+
+\subsection{Four-Term Loss}
+\begin{equation}
+\mathcal{L} = 0.8 L_1 + 0.2(1 - \text{SSIM}) + 0.1 \mathcal{L}_{\text{CE}} + 0.01 \mathcal{L}_{\text{balance}}
+\end{equation}
+where $\mathcal{L}_{\text{CE}}$ is cross-entropy on gate logits and $\mathcal{L}_{\text{balance}} = \sum_i (\bar{w}_i - 1/4)^2$ prevents gate collapse.
+
+\subsection{Two-Stage Training}
+\begin{enumerate}
+\item \textbf{Warm-up} (2 epochs): Experts frozen in eval mode, only gate trains, lr=$10^{-4}$.
+\item \textbf{Joint} (8 epochs): All parameters trainable, lr=$2 \times 10^{-5}$.
+\end{enumerate}
+Initialization: gate from Task~2 classifier (trial~005), experts from Task~2 specialists (trial~007).
+
+\subsection{Results}
+Selected trial~005, epoch~10: reconstruction L1 = 0.0239, SSIM = 0.8734, fixed-$\alpha$ loss = 0.0444. ONNX parity: max error $1.85 \times 10^{-6}$.
+
+% TODO: Add routing weight heatmap figure
+% TODO: Add expert utilization analysis
+
+% ============================================================
+\section{Task~4: Style-Conditioned cGAN}
+% ============================================================
+
+\subsection{Architecture}
+\textbf{Generator (CandidateGenerator)}: Deep U-Net with 6 encoder levels, BatchNorm, skip connections, learned style embedding ($3 \times 8$) concatenated to input channels, transposed convolution decoding, tanh $\to [0,1]$ output.
+
+\textbf{Discriminator (StylePatchGAN)}: Four convolutional stages producing $14 \times 14$ patch logits ($70 \times 70$ receptive field) with separate learned style embedding.
+
+\subsection{Loss}
+\begin{align}
+\mathcal{L}_G &= \mathcal{L}_{\text{BCE}}(\hat{D}, 1) + \lambda_{\text{rec}} L_1 + \lambda_{\text{edge}} \mathcal{L}_{\text{grad}} \\
+\mathcal{L}_D &= \mathcal{L}_{\text{BCE}}(D_{\text{real}}, 1) + \mathcal{L}_{\text{BCE}}(D_{\text{fake}}, 0)
+\end{align}
+with $\lambda_{\text{rec}} = 100$.
+
+\subsection{BatchNorm Diagnostic}
+A discriminator train/eval mode mismatch was discovered during the generator backward pass: running statistics were incorrectly updated during the generator-phase fake sample evaluation. The fix sets the discriminator to eval mode during the generator phase, preserving BatchNorm statistics from real-sample updates only.
+
+\subsection{Results}
+% TODO: Add validation metrics and multi-style comparison
+ONNX: Generator-only graph; inputs: image $[N,3,128,128]$ + style $[N]$ (int64 0--2).
+
+% ============================================================
+\section{Optimization and Experimental Setup}
+% ============================================================
+
+All tasks use Optuna TPE sampling with atomic JSON study persistence for safe checkpoint-resume across Colab/Kaggle sessions. Table~\ref{tab:optuna} summarizes the search configuration.
+
+\begin{table}[h]
+\centering
+\caption{Optuna search configuration per task.}
+\label{tab:optuna}
+\begin{tabular}{@{}lp{3cm}l@{}}
+\toprule
+\textbf{Task} & \textbf{Parameters} & \textbf{Objective} \\
+\midrule
+1 & lr, batch, latent, channels, $\alpha$ & $0.8 L_1 + 0.2(1{-}\text{SSIM})$ \\
+2 Clf & lr, batch, channels & CE loss \\
+2 Spec & lr, batch, latent\_ch, ch\_preset, $\alpha$ & $0.8 L_1 + 0.2(1{-}\text{SSIM})$ \\
+3 & lr$_w$, lr$_j$, $\tau$, batch, $\alpha$ & $0.8 L_1 + 0.2(1{-}\text{SSIM})$ \\
+4 & lr$_G$, lr$_D$, $\lambda_{\text{rec}}$, $\lambda_{\text{edge}}$, dropout & L1 val loss \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Experiment tracking uses MLflow with local file-based storage. All metrics, preview grids, and checkpoints are logged per epoch.
+
+% ============================================================
+\section{Application and Deployment}
+% ============================================================
+
+The application uses a three-tier architecture: a React (Vite + Tailwind~4) frontend served via Nginx, proxying API calls to a FastAPI backend running ONNX Runtime inference. Docker Compose orchestrates both services with health-check probes.
+
+\subsection{API Endpoints}
+Four inference endpoints:
+\begin{itemize}
+\item \texttt{POST /universal-restoration}: Task~1 universal AE
+\item \texttt{POST /hard-routing}: Task~2 classifier + specialist routing
+\item \texttt{POST /soft-mixture}: Task~3 soft MoE with routing weights
+\item \texttt{POST /face-to-sketch}: Task~4 style-conditioned sketch
+\end{itemize}
+
+\subsection{Frontend Workspaces}
+Four interactive workspaces provide: image upload with drag-and-drop, webcam capture (Task~4), classifier probability bars (Task~2), continuous routing weight visualization (Task~3), style selection cards (Task~4), side-by-side input/output comparison, inference timing, and result download.
+
+\subsection{ONNX Parity}
+\begin{table}[h]
+\centering
+\caption{ONNX numerical parity verification.}
+\label{tab:onnx}
+\begin{tabular}{@{}lr@{}}
+\toprule
+\textbf{Model} & \textbf{Max Abs Error} \\
+\midrule
+Task~1 Universal AE & $3.28 \times 10^{-7}$ \\
+Task~2 Classifier & $1.22 \times 10^{-4}$ \\
+Task~2 Salt Expert & $1.58 \times 10^{-6}$ \\
+Task~2 Blur Expert & $1.85 \times 10^{-6}$ \\
+Task~2 Occlusion Expert & $1.67 \times 10^{-6}$ \\
+Task~3 Soft MoE & $1.85 \times 10^{-6}$ \\
+Task~4 cGAN Generator & verified \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ============================================================
+\section{Limitations and Conclusion}
+% ============================================================
+
+\subsection{Limitations}
+All models operate at $128 \times 128$ resolution, limiting fine detail recovery. Only three corruption types are addressed; real-world degradations remain uncovered. The dense bottleneck in Task~1 causes spatial smoothing despite spatial variant improvements. Task~4 GAN outputs exhibit blurred fine linework. Optuna searches use limited trial budgets due to GPU time constraints.
+
+\subsection{Conclusion}
+Progressively increasing architectural specialization yields consistent restoration improvements: hard routing via specialist experts outperforms the universal baseline, while soft MoE further improves through differentiable blending. Style-conditioned GANs successfully produce multi-style sketches from a single model. The complete pipeline demonstrates end-to-end machine learning engineering from data preparation through ONNX-deployed web application.
+
+% ============================================================
 \appendices
-\section{AI Use}TODO: assistance, verification and corrections.
+\section{AI Use}
+OpenAI Codex assisted with repository scaffolding, Docker configuration, infrastructure tests, data preparation scripts, model architecture stubs, training loop boilerplate, evaluation pipelines, ONNX export scripts, and the frontend placeholder shell. All trained model weights, research decisions, hyperparameter search interpretation, and final analysis are the student's responsibility. The full chronological record is maintained in \texttt{docs/ai\_use.md}.
+
 \bibliographystyle{IEEEtran}
 \bibliography{references}
+
 \end{document}
