@@ -144,3 +144,5 @@ Added a separate corrupted-input diagnostic while keeping baseline and clean-dia
 Task 4 search: config/objective unit tests pass; CPU debug screening creates study, leaderboard, selected config and checkpoints. Full GPU search remains to be run. See docs/task4_optuna.md.
 
 Task 4 selected epoch 19: CPU full train/validation re-evaluation reproduced saved validation metrics (L1 0.10518875, SSIM 0.50645363). See task4_selected_validation.md; visual limitations remain and official test was untouched.
+
+Task 4 deep candidate: output-range/style-gradient/frozen-BatchNorm test passed. Real CPU debug pause/resume over two epochs exactly matched uninterrupted generator/discriminator states (including buffers), both optimizer states, history/progress and CPU RNG. Debug subsets are not quality evidence. Candidate notebook cells compile; full GPU validation comparison pending.

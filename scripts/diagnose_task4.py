@@ -19,7 +19,14 @@ def main():
     a = p.parse_args()
     torch.set_num_threads(2)
     saved = torch.load(a.checkpoint, map_location='cpu', weights_only=True)
-    model = StyleUNet(**saved['config']['generator'])
+    architecture = saved['config'].get('architecture')
+    if architecture == 'deep_unet_v1':
+        from src.models.task4_candidate import CandidateGenerator
+        model = CandidateGenerator(**saved['config']['generator'])
+    elif architecture is None:
+        model = StyleUNet(**saved['config']['generator'])
+    else:
+        raise ValueError(f'Unknown architecture: {architecture}')
     model.load_state_dict(saved['generator']); model.eval()
     a.output_dir.mkdir(parents=True, exist_ok=True)
     report = {'checkpoint_sha256': hashlib.sha256(a.checkpoint.read_bytes()).hexdigest(),

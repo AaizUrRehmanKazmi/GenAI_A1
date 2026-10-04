@@ -69,3 +69,7 @@ Codex implemented the controlled tiny-set corruption diagnostic. It retains the 
 - Evaluated selected Task 4 epoch 19 locally on complete train/validation splits; generated same-photo three-style previews and documented remaining artifacts without attributing an unverified cause.
 
 - Added a matched Task 4 L1-only versus GAN+L1 fixed-12-training-pair diagnostic, with identical generator initialization, disabled dropout/augmentation, and preserved baseline training source. Debug-only results must not be reported as validation performance.
+
+- Reviewed user-supplied task4_face2sketch.zip; executed isolated alternative generator fitting and style-gradient checks. Documented training-only gains, metric incompatibility, resume limitations and dependency limits in task4_alternative_review.md.
+
+- Integrated user-supplied deeper Task 4 architecture as a separate candidate, with [0,1] adapters, original split/metric conventions, discriminator BatchNorm freeze policy, separate resumable trainer and Kaggle notebook. Verified exact CPU debug resume; original baseline training sources unchanged.
