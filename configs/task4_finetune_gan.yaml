@@ -1,0 +1,19 @@
+architecture: deep_unet_v1
+discriminator:
+  base_channels: 32
+  style_dim: 8
+discriminator_policy: batch_stats_preserve_buffers
+generator:
+  base_channels: 32
+  dropout: 0.2
+  style_dim: 8
+loss:
+  adversarial_weight: 0.1
+  l1_weight: 100.0
+seed: 42
+task: 4
+training:
+  batch_size: 8
+  discriminator_lr: 2.0e-05
+  epochs: 5
+  generator_lr: 5.0e-05
