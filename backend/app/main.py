@@ -39,38 +39,46 @@ app = FastAPI(title="GenAI Assignment", version="0.3.0", lifespan=lifespan)
 
 @app.get("/health")
 async def health():
+    universal_service = getattr(app.state, 'universal', None)
+    hard_router = getattr(app.state, 'hard_router', None)
+    soft_mixture = getattr(app.state, 'soft_mixture', None)
+    sketch_service = getattr(app.state, 'sketch', None)
     return {"status": "ok",
-            "inference_ready": all([app.state.universal, app.state.hard_router,
-                                    app.state.soft_mixture, app.state.sketch]),
-            "tasks": {"universal-restoration": app.state.universal is not None,
-                      "hard-routing": app.state.hard_router is not None,
-                      "soft-mixture": app.state.soft_mixture is not None,
-                      "face-to-sketch": app.state.sketch is not None}}
+            "inference_ready": any([universal_service, hard_router,
+                                    soft_mixture, sketch_service]),
+            "tasks": {"universal-restoration": universal_service is not None,
+                      "hard-routing": hard_router is not None,
+                      "soft-mixture": soft_mixture is not None,
+                      "face-to-sketch": sketch_service is not None}}
 
 @app.post("/universal-restoration")
 async def universal(file: UploadFile = File(...)):
     payload = await validate_image(file)
-    if app.state.universal is None:
+    universal_service = getattr(app.state, 'universal', None)
+    if universal_service is None:
         raise HTTPException(503, 'Task 1 model is unavailable. Check the mounted model bundle.')
-    return await run_in_threadpool(app.state.universal.predict, payload)
+    return await run_in_threadpool(universal_service.predict, payload)
 
 @app.post("/hard-routing", response_model=InferenceResult)
 async def hard(file: UploadFile = File(...)):
     payload = await validate_image(file)
-    if app.state.hard_router is None:
+    hard_router = getattr(app.state, 'hard_router', None)
+    if hard_router is None:
         raise HTTPException(503, 'Task 2 models are unavailable. Check the mounted model bundle.')
-    return await run_in_threadpool(app.state.hard_router.predict, payload)
+    return await run_in_threadpool(hard_router.predict, payload)
 
 @app.post("/soft-mixture", response_model=InferenceResult)
 async def soft(file: UploadFile = File(...)):
     payload = await validate_image(file)
-    if app.state.soft_mixture is None:
+    soft_mixture = getattr(app.state, 'soft_mixture', None)
+    if soft_mixture is None:
         raise HTTPException(503, 'Task 3 models are unavailable. Check the model bundle.')
-    return await run_in_threadpool(app.state.soft_mixture.predict, payload)
+    return await run_in_threadpool(soft_mixture.predict, payload)
 
 @app.post("/face-to-sketch")
 async def sketch(file: UploadFile = File(...), style: int = Form(..., ge=1, le=3)):
     payload = await validate_image(file)
-    if app.state.sketch is None:
+    sketch_service = getattr(app.state, 'sketch', None)
+    if sketch_service is None:
         raise HTTPException(503, 'Task 4 model unavailable. Check model bundle.')
-    return await run_in_threadpool(app.state.sketch.predict, payload, style)
+    return await run_in_threadpool(sketch_service.predict, payload, style)

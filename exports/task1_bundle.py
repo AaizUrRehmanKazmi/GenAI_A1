@@ -11,6 +11,8 @@ import onnx
 import onnxruntime as ort
 
 from src.models.universal_ae import UniversalAutoencoder
+from src.models.spatial_ae import SpatialAutoencoder
+from src.models.spatial16_ae import Spatial16Autoencoder
 
 
 def digest(path):
@@ -20,6 +22,18 @@ def digest(path):
 def compare(ref, actual):
     diff = np.abs(ref - actual)
     return {'max_abs_error': float(diff.max()), 'mean_abs_error': float(diff.mean())}
+
+
+def build_model(config):
+    model_config = dict(config['model'])
+    if 'latent_dim' in model_config:
+        return UniversalAutoencoder(**model_config), 'universal_ae'
+    if 'latent_channels' not in model_config:
+        raise ValueError(f"Unsupported Task 1 model config: {model_config}")
+    architecture = config.get('architecture')
+    if architecture == 'spatial_ae':
+        return SpatialAutoencoder(**model_config), 'spatial_ae'
+    return Spatial16Autoencoder(**model_config), 'spatial16_ae'
 
 
 def main():
@@ -47,7 +61,7 @@ def main():
         (out / 'history.json').write_text(json.dumps(ck.get('history', {}), indent=2))
 
     # Build model
-    model = UniversalAutoencoder(**config['model'])
+    model, architecture = build_model(config)
     model.load_state_dict(ck['model'])
     model.eval()
 
@@ -87,7 +101,7 @@ def main():
     manifest = {
         'status': 'verified',
         'task': 1,
-        'architecture': 'universal_ae',
+        'architecture': architecture,
         'checkpoint_sha256': digest(out / 'best.pt'),
         'onnx_sha256': digest(onnx_path),
         'epoch': ck['progress']['epoch'],
