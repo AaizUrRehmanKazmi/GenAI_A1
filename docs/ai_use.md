@@ -87,3 +87,5 @@ Codex implemented the controlled tiny-set corruption diagnostic. It retains the 
 - Implemented matched sketch-gradient versus reconstruction-only fine-tuning with target-sketch adjacent-pixel differences, unchanged validation metrics and separate trainer/checkpoints. Gradient weight is provisional; no quality claim from CPU debug runs.
 
 - Added longer resumable fixed12 deeper-generator reconstruction diagnostic and Kaggle notebook, with periodic metrics/previews. Training-pair evidence explicitly separated from validation and final cGAN requirements.
+
+- Prepared separate dropout0 reconstruction configuration/notebook with unchanged trainer, matched remaining configuration and preserved prior runs. Documented RNG-consumption caveat and single-run comparison limits.
