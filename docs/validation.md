@@ -148,3 +148,5 @@ Task 4 selected epoch 19: CPU full train/validation re-evaluation reproduced sav
 Task 4 deep candidate: output-range/style-gradient/frozen-BatchNorm test passed. Real CPU debug pause/resume over two epochs exactly matched uninterrupted generator/discriminator states (including buffers), both optimizer states, history/progress and CPU RNG. Debug subsets are not quality evidence. Candidate notebook cells compile; full GPU validation comparison pending.
 
 Corrected Task 4 BN trainer: focused train-logit/input-gradient/frozen-state test passed; real CPU debug two-epoch paused/resumed run exactly matched uninterrupted model/buffer states, both optimizers, progress/history and RNG. Notebook code cells compile. No GPU quality claim yet.
+
+Task 4 reconstruction-only: CPU debug two-epoch pause/resume exactly matched uninterrupted models, optimizer states, progress/history and RNG. Generator changed, discriminator state matched fresh initialization and its optimizer remained unused. Notebook cells compile; full GPU validation pending.

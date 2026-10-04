@@ -1,0 +1,18 @@
+architecture: deep_unet_v1
+discriminator:
+  base_channels: 32
+  style_dim: 8
+generator:
+  base_channels: 32
+  dropout: 0.2
+  style_dim: 8
+loss:
+  l1_weight: 100.0
+objective: reconstruction_only
+seed: 42
+task: 4
+training:
+  batch_size: 8
+  discriminator_lr: 0.0002
+  epochs: 30
+  generator_lr: 0.0002

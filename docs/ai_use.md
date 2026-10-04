@@ -77,3 +77,5 @@ Codex implemented the controlled tiny-set corruption diagnostic. It retains the 
 - Tested candidate discriminator train/eval BatchNorm mismatch on six fixed train/validation batches using fresh model copies. Confirmed mode dependence introduced by the integration policy; documented correction proposal and causal limitations in task4_bn_diagnostic.md.
 
 - Corrected the discriminator BatchNorm mode mismatch introduced during candidate integration using a separate trainer and buffer-preserving generator-phase context. Added focused state/gradient testing and a fresh-run Kaggle notebook; quality improvement remains unverified.
+
+- Added separate full-split Task 4 reconstruction-only ablation retaining candidate initialization, data and metric conventions. No discriminator updates; preserved prior trainers. This diagnostic does not satisfy the final cGAN requirement alone.
