@@ -85,3 +85,5 @@ Codex implemented the controlled tiny-set corruption diagnostic. It retains the 
 - Evaluated best fine-tuned GAN on all160 validation pairs with white-output baseline; inspected style-balanced representative and worst-SSIM panels/overlays. Documented missing linework and uncertainty about alignment; no official test usage.
 
 - Implemented matched sketch-gradient versus reconstruction-only fine-tuning with target-sketch adjacent-pixel differences, unchanged validation metrics and separate trainer/checkpoints. Gradient weight is provisional; no quality claim from CPU debug runs.
+
+- Added longer resumable fixed12 deeper-generator reconstruction diagnostic and Kaggle notebook, with periodic metrics/previews. Training-pair evidence explicitly separated from validation and final cGAN requirements.

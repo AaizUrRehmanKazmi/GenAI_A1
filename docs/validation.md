@@ -154,3 +154,5 @@ Task 4 reconstruction-only: CPU debug two-epoch pause/resume exactly matched uni
 Task 4 fine-tuning: both control and GAN CPU debug runs initialized from selected reconstruction checkpoint successfully. Two-epoch GAN resumed versus uninterrupted states matched exactly (models, optimizers, progress/history, RNG). Notebook compiled. GPU validation remains pending.
 
 Task4 sketch-gradient ablation: three loss tests passed; real-checkpoint CPU debug two-epoch resumed/uninterrupted generator, optimizer, progress/history and RNG matched exactly. Discriminator optimizer unused. Notebook compiled; full GPU comparison pending.
+
+Fixed12 candidate diagnostic: CPU real-pair two-step resumed and uninterrupted model, optimizer, RNG and history matched exactly; notebook cells compile. Longer GPU fit remains pending.
