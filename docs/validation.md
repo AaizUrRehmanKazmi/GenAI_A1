@@ -146,3 +146,5 @@ Task 4 search: config/objective unit tests pass; CPU debug screening creates stu
 Task 4 selected epoch 19: CPU full train/validation re-evaluation reproduced saved validation metrics (L1 0.10518875, SSIM 0.50645363). See task4_selected_validation.md; visual limitations remain and official test was untouched.
 
 Task 4 deep candidate: output-range/style-gradient/frozen-BatchNorm test passed. Real CPU debug pause/resume over two epochs exactly matched uninterrupted generator/discriminator states (including buffers), both optimizer states, history/progress and CPU RNG. Debug subsets are not quality evidence. Candidate notebook cells compile; full GPU validation comparison pending.
+
+Corrected Task 4 BN trainer: focused train-logit/input-gradient/frozen-state test passed; real CPU debug two-epoch paused/resumed run exactly matched uninterrupted model/buffer states, both optimizers, progress/history and RNG. Notebook code cells compile. No GPU quality claim yet.

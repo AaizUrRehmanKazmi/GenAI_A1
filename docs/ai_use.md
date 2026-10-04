@@ -73,3 +73,7 @@ Codex implemented the controlled tiny-set corruption diagnostic. It retains the 
 - Reviewed user-supplied task4_face2sketch.zip; executed isolated alternative generator fitting and style-gradient checks. Documented training-only gains, metric incompatibility, resume limitations and dependency limits in task4_alternative_review.md.
 
 - Integrated user-supplied deeper Task 4 architecture as a separate candidate, with [0,1] adapters, original split/metric conventions, discriminator BatchNorm freeze policy, separate resumable trainer and Kaggle notebook. Verified exact CPU debug resume; original baseline training sources unchanged.
+
+- Tested candidate discriminator train/eval BatchNorm mismatch on six fixed train/validation batches using fresh model copies. Confirmed mode dependence introduced by the integration policy; documented correction proposal and causal limitations in task4_bn_diagnostic.md.
+
+- Corrected the discriminator BatchNorm mode mismatch introduced during candidate integration using a separate trainer and buffer-preserving generator-phase context. Added focused state/gradient testing and a fresh-run Kaggle notebook; quality improvement remains unverified.
