@@ -81,3 +81,7 @@ Codex implemented the controlled tiny-set corruption diagnostic. It retains the 
 - Added separate full-split Task 4 reconstruction-only ablation retaining candidate initialization, data and metric conventions. No discriminator updates; preserved prior trainers. This diagnostic does not satisfy the final cGAN requirement alone.
 
 - Added separate matched reconstruction-control versus low-weight adversarial fine-tuning, initialized from selected reconstruction weights with fresh optimizers, checkpoint/data provenance checks, and Kaggle backup workflow. Settings are provisional; debug runs are not quality evidence.
+
+- Evaluated best fine-tuned GAN on all160 validation pairs with white-output baseline; inspected style-balanced representative and worst-SSIM panels/overlays. Documented missing linework and uncertainty about alignment; no official test usage.
+
+- Implemented matched sketch-gradient versus reconstruction-only fine-tuning with target-sketch adjacent-pixel differences, unchanged validation metrics and separate trainer/checkpoints. Gradient weight is provisional; no quality claim from CPU debug runs.

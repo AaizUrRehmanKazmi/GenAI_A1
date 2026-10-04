@@ -152,3 +152,5 @@ Corrected Task 4 BN trainer: focused train-logit/input-gradient/frozen-state tes
 Task 4 reconstruction-only: CPU debug two-epoch pause/resume exactly matched uninterrupted models, optimizer states, progress/history and RNG. Generator changed, discriminator state matched fresh initialization and its optimizer remained unused. Notebook cells compile; full GPU validation pending.
 
 Task 4 fine-tuning: both control and GAN CPU debug runs initialized from selected reconstruction checkpoint successfully. Two-epoch GAN resumed versus uninterrupted states matched exactly (models, optimizers, progress/history, RNG). Notebook compiled. GPU validation remains pending.
+
+Task4 sketch-gradient ablation: three loss tests passed; real-checkpoint CPU debug two-epoch resumed/uninterrupted generator, optimizer, progress/history and RNG matched exactly. Discriminator optimizer unused. Notebook compiled; full GPU comparison pending.
