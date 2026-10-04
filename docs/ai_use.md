@@ -61,3 +61,7 @@ Codex implemented the controlled tiny-set corruption diagnostic. It retains the 
 - Codex added and executed real-pair GAN diagnostic with separate loss logging, gradient isolation assertions and preview. Full training pending.
 
 - Codex implemented resumable dual-optimizer Task 4 trainer, validation/preview logging and Kaggle five-epoch baseline workflow. Initial hyperparameters are provisional; full GPU training and tuning pending.
+
+- Added and ran CPU Task 4 best-checkpoint diagnostics on all train/validation pairs and same-photo style probes; recorded limitations in task4_diagnostic.md. No training source or saved configuration changed.
+
+- Implemented resumable Task 4 Optuna screening and Kaggle notebook, including independent GAN learning rates and required architecture/loss parameters. Fixed validation objective, source/data fingerprint checks, and full fresh-retraining instructions added. CPU debug runs are not final evidence.

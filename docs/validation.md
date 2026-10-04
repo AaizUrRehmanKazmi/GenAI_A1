@@ -140,3 +140,5 @@ Added a separate corrupted-input diagnostic while keeping baseline and clean-dia
 - Task 4 real-pair diagnostic: 20 CPU steps on three training pairs passed finite-gradient and D/G isolation checks; both style embeddings updated. L1 .33268 to .16281 on those pairs only. Preview inspected; no held-out quality claim.
 
 - Task 4 resume test: paused after one complete D+G batch, resumed through two epochs; exact equality with uninterrupted run for both models, both optimizers, progress/history and CPU RNG. Tiny debug subsets only. Notebook cells compile.
+
+Task 4 search: config/objective unit tests pass; CPU debug screening creates study, leaderboard, selected config and checkpoints. Full GPU search remains to be run. See docs/task4_optuna.md.
